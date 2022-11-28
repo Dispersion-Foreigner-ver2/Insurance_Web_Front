@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
-import CustomTextInput from "../component/CustomTextInput";
+import CustomTextInput from "../../component/CustomTextInput";
 import axios from "axios";
-import CustomButton from "../component/CustomButton";
+import CustomButton from "../../component/CustomButton";
 
 const FireInsuranceCreate = () => {
 

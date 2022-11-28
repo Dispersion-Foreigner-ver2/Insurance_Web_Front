@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     },
     textView: {
         width: "90%",
-        // margin: "7%",
+        margin: "7%",
     },
     staffText: {
         fontSize: 30,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     },
     buttonView: {
         width: "90%",
-        margin: "7%",
+        margin: 15,
         marginTop: 50,
 
     },

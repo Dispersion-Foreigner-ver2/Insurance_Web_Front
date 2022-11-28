@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {SafeAreaView, Text, TextInput, StyleSheet, View, TouchableOpacity, Alert} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 import axios from "axios";
-import CustomButton from "../component/CustomButton";
+import CustomButton from "../../component/CustomButton";
 
 const Join = () => {
 

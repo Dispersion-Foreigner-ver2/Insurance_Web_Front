@@ -15,18 +15,18 @@ const InsuranceManage = () => {
                 <Text style={styles.mainText}>보험사 보험 현황</Text>
                 <View style={styles.countsView}>
                     <View style={styles.countView1}>
-                        <Text style={styles.insuranceText}>총 보험</Text>
-                        <Text style={styles.countText}>{totalCount}</Text>
+                        <Text style={styles.insuranceText1}>총 보험</Text>
+                        <Text style={styles.countText1}>{totalCount}</Text>
                     </View>
 
                     <View style={styles.countView2}>
-                        <Text style={styles.insuranceText}>인가 성공</Text>
-                        <Text style={styles.countText}>{totalCount}</Text>
+                        <Text style={styles.insuranceText2}>인가 성공</Text>
+                        <Text style={styles.countText2}>{authorizeCount}</Text>
                     </View>
 
                     <View style={styles.countView3}>
-                        <Text style={styles.insuranceText}>인가 실패</Text>
-                        <Text style={styles.countText}>{totalCount}</Text>
+                        <Text style={styles.insuranceText3}>인가 실패</Text>
+                        <Text style={styles.countText3}>{notAuthorizeCount}</Text>
                     </View>
                 </View>
             </View>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowOffset: {height: 2, width: 2},
         shadowRadius: 2,
-        backgroundColor: "#ff9f1a",
+        backgroundColor: "#FFB788",
 
     },
     countView2: {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowOffset: {height: 2, width: 2},
         shadowRadius: 2,
-        backgroundColor: "#1dd1a1"
+        backgroundColor: "#3986E8"
     },
     countView3: {
         height: 110,
@@ -93,20 +93,52 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowOffset: {height: 2, width: 2},
         shadowRadius: 2,
-        backgroundColor: "#ff6b6b"
+        backgroundColor: "#FF88C2"
     },
-    insuranceText: {
+    insuranceText1: {
         fontSize: 22,
         fontStyle: "italic",
         fontWeight: "bold",
-        color: "white",
+        color: "#FF8230",
         marginBottom: 10,
 
     },
-    countText: {
+    countText1: {
         fontSize: 22,
         fontStyle: "italic",
-        color: "white",
+        color: "#FF8230",
+        fontWeight: "bold",
+
+    },
+
+    insuranceText2: {
+        fontSize: 22,
+        fontStyle: "italic",
+        fontWeight: "bold",
+        color: "#0857BD",
+        marginBottom: 10,
+
+    },
+    countText2: {
+        fontSize: 22,
+        fontStyle: "italic",
+        color: "#0857BD",
+        fontWeight: "bold",
+
+    },
+
+    insuranceText3: {
+        fontSize: 22,
+        fontStyle: "italic",
+        fontWeight: "bold",
+        color: "#FF5CAC",
+        marginBottom: 10,
+
+    },
+    countText3: {
+        fontSize: 22,
+        fontStyle: "italic",
+        color: "#FF5CAC",
         fontWeight: "bold",
 
     },
