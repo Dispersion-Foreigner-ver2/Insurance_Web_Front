@@ -3,11 +3,12 @@ import {SafeAreaView, StyleSheet, Text, View} from "react-native";
 import CustomMainButton from "../../component/CustomMainButton";
 
 
-const InsuranceManage = () => {
+const InsuranceManage = ({navigation}) => {
 
     const [totalCount, setTotalCount] = useState(0);
     const [authorizeCount, setAuthorizeCount] = useState(0);
     const [notAuthorizeCount, setNotAuthorizeCount] = useState(0);
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -32,7 +33,7 @@ const InsuranceManage = () => {
             </View>
 
             <View style={styles.buttonView}>
-                <CustomMainButton buttonText={"보험 목록 조회"}/>
+                <CustomMainButton func={() => {navigation.navigate("InsuranceInquiry")}} buttonText={"보험 목록 조회"}/>
             </View>
         </SafeAreaView>
     );
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 2,
         alignItems: "center",
+        backgroundColor: "white"
     },
     mainView: {
         width: "90%",

@@ -1,9 +1,8 @@
 import React, {useState} from "react";
-import {Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import CustomIconButton from "../../component/CustomIconButton";
+import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import CustomInsuranceList from "../../component/CustomInsuranceList";
 
-const InsuranceInquiry = () => {
+const InsuranceInquiry = ({navigation}) => {
 
     const [insurance, setInsurance] = useState([]);
     const [insuranceId, setInsuranceId] = useState(0);
@@ -15,24 +14,63 @@ const InsuranceInquiry = () => {
             [
                 {
                     text: "화재 보험",
+                    onPress: moveFire,
                 },
                 {
                     text: "자동차 보험",
+                    onPress: moveCar,
                 },
                 {
                     text: "해상 보험",
+                    onPress: moveSea,
                 },
             ]
         )
     }
 
-    // const insuranceList = {
-    //     insuranceType,
-    //     insuranceName,
-    //     insuranceExp,
-    //     insuranceAuthorize,
-    //     id: {insuranceId}
-    // }
+    function moveFire() {
+        navigation.navigate("FireInsuranceCreate");
+    }
+
+    function moveCar() {
+        navigation.navigate("CarInsuranceCreate")
+    }
+
+    function moveSea() {
+        navigation.navigate("SeaInsuranceCreate")
+    }
+
+
+    function authorize() {
+        Alert.alert(
+            "해당 보험을 인가 받을까요?",
+            null,
+            [
+                {
+                    text: "예",
+                },
+                {
+                    text: "아니요",
+                },
+            ]
+        )
+    }
+
+    function deleteInsurance()
+    {
+        Alert.alert(
+            "해당 보험을 삭제할까요?",
+            null,
+            [
+                {
+                    text: "예",
+                },
+                {
+                    text: "아니요",
+                },
+            ]
+        )
+    }
 
 
     return (
@@ -46,10 +84,10 @@ const InsuranceInquiry = () => {
 
             </View>
             <ScrollView style={styles.listView}>
-                <CustomInsuranceList/>
-                <CustomInsuranceList/>
-                <CustomInsuranceList/>
-                <CustomInsuranceList/>
+                <CustomInsuranceList authorizeInsurance={authorize} deleteInsurance={deleteInsurance}/>
+                <CustomInsuranceList authorizeInsurance={authorize} deleteInsurance={deleteInsurance}/>
+                <CustomInsuranceList authorizeInsurance={authorize} deleteInsurance={deleteInsurance}/>
+                <CustomInsuranceList authorizeInsurance={authorize} deleteInsurance={deleteInsurance}/>
             </ScrollView>
         </SafeAreaView>
     );
@@ -58,11 +96,13 @@ const InsuranceInquiry = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "white"
     },
     buttonView: {
         height: 50,
         width: "100%",
         alignItems: "flex-end",
+
     },
     button: {
         height: 40,

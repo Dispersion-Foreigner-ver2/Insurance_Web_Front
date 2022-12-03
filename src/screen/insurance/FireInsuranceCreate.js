@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import CustomTextInput from "../../component/CustomTextInput";
 import axios from "axios";
 import CustomButton from "../../component/CustomButton";
@@ -13,6 +13,33 @@ const FireInsuranceCreate = () => {
     const [humanDamage, setHumanDamage] = useState(0);
     const [buildingDamage, setBuildingDamage] = useState(0);
 
+
+    function checkCreate() {
+        let check = false;
+
+        Alert.alert("해당 정보가 맞습니까?",
+            `보험 이름: ${name}\n보험 설명: ${explanation}\n보험료: ${premium}\n주변 피해 보상금: ${surroundingDamage}\n인적 피해 보상금: ${humanDamage}\n건물 피해 보상금: ${buildingDamage}`,
+            [
+                {
+                    text: "예",
+                    onPress: () => createFireInsurance
+
+
+                },
+                {
+                    text: "아니요",
+                    onPress: () => {
+                        setName("");
+                        setExplanation("");
+                        setPremium("");
+                        setSurroundingDamage("")
+                        setHumanDamage("");
+                        setBuildingDamage("");
+                    }
+                }
+            ]
+            )
+    }
 
     function createFireInsurance() {
         axios.post("http://localhost:8080/insurance/design/fire",
@@ -40,7 +67,7 @@ const FireInsuranceCreate = () => {
                     setBuildingDamage("");
                 }
             }).catch(function (err) {
-                console.log(`Error message : ${err}`)
+            console.log(`Error message : ${err}`)
         });
     }
 
@@ -93,7 +120,7 @@ const FireInsuranceCreate = () => {
                                  value={buildingDamage}
                 />
 
-                <CustomButton text={"제출하기"} func={createFireInsurance} />
+                <CustomButton text={"제출하기"} func={checkCreate} />
 
             </ScrollView>
         </SafeAreaView>
@@ -105,6 +132,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignContent: "center",
         justifyContent: "flex-start",
+        backgroundColor: "white"
     },
     container: {
         height: 500,

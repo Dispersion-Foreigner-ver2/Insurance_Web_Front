@@ -1,14 +1,29 @@
-import React, {useEffect, useState} from "react";
-import {ImageBackground, SafeAreaView, Text, TouchableOpacity, View, StyleSheet} from "react-native";
+import React, {useContext, useEffect, useState} from "react";
+import {SafeAreaView, StyleSheet, Text, View} from "react-native";
 import CustomMainButton from "../component/CustomMainButton";
+import {StaffContext} from "../context/Staff";
 
 
+const Home = ({navigation}) => {
 
-const Main = () => {
+    const {staff} = useContext(StaffContext);
+
+    useEffect(() => {
+        setStaffId(staff.staffId);
+        setStaffName(staff.name);
+    }, []);
 
     const [staffId, setStaffId] = useState();
     const [staffName, setStaffName] = useState();
-    const [department, setDepartment] = useState("");
+    const [department, setDepartment] = useState("Human");
+
+    function moveInsurance() {
+        navigation.navigate("InsuranceManage");
+    }
+
+    function moveStaff() {
+        navigation.navigate("StaffManage");
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -21,7 +36,7 @@ const Main = () => {
                 department === "Design" ? (
                     <View style={styles.buttonView}>
                         <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
-                        <CustomMainButton buttonText="보험 관리" />
+                        <CustomMainButton buttonText="보험 관리" func={moveInsurance} />
                     </View>
 
                 ) : (
@@ -41,7 +56,7 @@ const Main = () => {
                             department === "Human" ? (
                                 <View style={styles.buttonView}>
                                     <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
-                                    <CustomMainButton buttonText={"인사 관리"}/>
+                                    <CustomMainButton buttonText={"인사 관리"} func={moveStaff}/>
                                 </View>
                             ) : (
                                 <View style={styles.buttonView}>
@@ -62,6 +77,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignContent: "center",
+        backgroundColor: "white"
     },
     textView: {
         width: "90%",
@@ -101,4 +117,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Main;
+export default Home;

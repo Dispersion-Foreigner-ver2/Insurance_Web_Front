@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignContent: "center",
         justifyContent: "flex-start",
+        backgroundColor: "white"
     },
     container: {
         height: 500,

@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
-import CustomTextInput from "../component/CustomTextInput";
+import CustomTextInput from "../../component/CustomTextInput";
 import axios from "axios";
-import CustomButton from "../component/CustomButton";
-import {re} from "@babel/core/lib/vendor/import-meta-resolve";
+import CustomButton from "../../component/CustomButton";
 
 const SeaInsuranceCreate = () => {
 
@@ -96,6 +95,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignContent: "center",
         justifyContent: "flex-start",
+        backgroundColor: "white"
     },
     container: {
         height: 500,

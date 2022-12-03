@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {Image, StyleSheet, Text, View} from "react-native";
-import CustomIconButton from "./CustomIconButton";
+import CustomIconButton from "../component/CustomIconButton";
 
 
-const CustomInsuranceList = () => {
+const CustomInsuranceList = ({authorizeInsurance, deleteInsurance}) => {
 
     const [id, setId] = useState("123");
     const [type, setType] = useState("fire");
@@ -23,8 +23,6 @@ const CustomInsuranceList = () => {
             case "ship" :
                 setTypeIcon("../../assets/icons/ship.png");
         }
-
-
     },[]);
 
 
@@ -40,8 +38,17 @@ const CustomInsuranceList = () => {
                 <Text style={styles.nameText}>{name}</Text>
                 <Text style={styles.expText}>{exp}</Text>
             </View>
-            {authorize === false && <CustomIconButton source={require("../../assets/icons/edit.png")}/> }
-            <CustomIconButton source={require("../../assets/icons/delete.png")}/>
+            {authorize === true ? (
+                <View style={styles.checkImageView}>
+                    <Image style={styles.checkImage} source={require("../../assets/icons/check.png")} />
+                </View>
+            ) :(
+                <View style={styles.checkImageView}>
+                    <Image style={styles.checkImage}  source={require("../../assets/icons/no_check.png")} />
+                </View>
+            )}
+            {authorize === false && <CustomIconButton func={authorizeInsurance} source={require("../../assets/icons/edit.png")}/> }
+            <CustomIconButton func={deleteInsurance} source={require("../../assets/icons/delete.png")}/>
         </View>
     );
 };
@@ -98,10 +105,16 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
         color: "gray",
     },
-
-
-
-
+    checkImageView: {
+        padding: 10,
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    checkImage: {
+        width: 20,
+        height: 20,
+    },
 
 
 });
