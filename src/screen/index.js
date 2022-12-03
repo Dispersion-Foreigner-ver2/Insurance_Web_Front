@@ -10,5 +10,13 @@ import StaffManage from "./staff/StaffManage";
 import Home from "./Home";
 import StaffInformation from "./staff/StaffInformation";
 import StaffPayManage from "./staff/StaffPayManage";
+import UnderwriteManage from "./underwrite/UnderwriteManage";
+import CompensationManage from "./compensation/CompensationManage";
+import CompensationJudge from "./compensation/CompensationJudge";
+import CustomerManage from "./customer/CustomerManage";
+import CustomerInquiry from "./customer/CustomerInquiry";
 
-export {Login,Join, CustomerJoin, Home, StaffManage, SeaInsuranceCreate, FireInsuranceCreate, InsuranceInquiry, InsuranceManage, CarInsuranceCreate, StaffInformation, StaffPayManage}
+export {Login,Join, CustomerJoin, Home, StaffManage, SeaInsuranceCreate,
+    FireInsuranceCreate, InsuranceInquiry, InsuranceManage, CarInsuranceCreate,
+    StaffInformation, StaffPayManage, UnderwriteManage, CompensationManage,
+    CompensationJudge, CustomerManage, CustomerInquiry}

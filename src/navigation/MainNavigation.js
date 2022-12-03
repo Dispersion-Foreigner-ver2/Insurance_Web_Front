@@ -1,14 +1,14 @@
 import React from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import {
-    CarInsuranceCreate,
+    CarInsuranceCreate, CustomerInquiry, CustomerManage,
     FireInsuranceCreate,
     Home,
     InsuranceInquiry,
     InsuranceManage, SeaInsuranceCreate,
     StaffInformation,
     StaffManage,
-    StaffPayManage
+    StaffPayManage, UnderwriteManage
 } from "../screen";
 
 
@@ -29,6 +29,11 @@ const MainNavigation = () => {
             <MainStack.Screen name="StaffManage" component={StaffManage}/>
             <MainStack.Screen name="StaffInformation" component={StaffInformation}/>
             <MainStack.Screen name="StaffPayManage" component={StaffPayManage}/>
+
+            <MainStack.Screen name="UnderwriteManage" component={UnderwriteManage}/>
+
+            <MainStack.Screen name="CustomerManage" component={CustomerManage}/>
+            <MainStack.Screen name="CustomerInquiry" component={CustomerInquiry}/>
         </MainStack.Navigator>
     );
 };

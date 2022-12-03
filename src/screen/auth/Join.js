@@ -1,10 +1,9 @@
 import React, {useContext, useState} from "react";
-import {SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 import CustomButton from "../../component/CustomButton";
 import {StaffContext} from "../../context/Staff";
-
-
+import axios from "axios";
 
 
 const Join = ({navigation}) => {
@@ -12,25 +11,42 @@ const Join = ({navigation}) => {
     const {staff, dispatch} = useContext(StaffContext);
 
     function join() {
+        axios.post("http://localhost:8080/staffJoin",
+            null,
+            {
+                params: {
+                    id: id, pw: pw, name: name, SSN: SSN, eMail: email,
+                    phoneNum: phoneNum, department: departmentValue, position: positionValue, gender: genderValue,
+                }
+            })
+            .then(function (resp) {
+                if (resp.data.result.message === null) {
+                    Alert.alert(`가입을 축하합니다 ${name}님 !`,
+                        `ID는 ${id} 이며 PW는 ${pw} 입니다.`);
 
-        dispatch({id, name});
-        console.log(staff)
-    //     axios.post("http://localhost:8080/staffJoin",
-    //         null,
-    //         {
-    //             params: {
-    //                 id: id, pw: pw, name: name, SSN: SSN, eMail: email,
-    //                 phoneNum: phoneNum, department: departmentValue, position: positionValue, gender: genderValue,
-    //             }
-    //         })
-    //         .then(function (resp) {
-    //             Alert.alert(`가입을 축하합니다 ${name}님 !`,
-    //                 `ID는 ${id} 이며 PW는 ${pw} 입니다.`);
-    //
-    //             navigation.navigate('MainStack');
-    //         }).catch(function (reason) {
-    //             Alert.alert("회원가입 오류","가입에 실패하였습니다. 다시 시도해주세요.");
-    //         });
+                    const staffId = resp.data.result.staffId;
+                    const name = resp.data.result.staffName;
+                    const department = resp.data.result.department;
+
+                    dispatch({staffId, name, department})
+                } else {
+                    Alert.alert("회원가입 오류", resp.data.result.message);
+                    setId("");
+                    setPw("");
+                    setName("");
+                    setSSN("");
+                    setEmail("");
+                    setPhoneNum("");
+                }
+            }).catch(function (reason) {
+                Alert.alert("회원가입 오류","가입에 실패하였습니다. 다시 시도해주세요.");
+                setId("");
+                setPw("");
+                setName("");
+                setSSN("");
+                setEmail("");
+                setPhoneNum("");
+            });
     }
 
     const [id, setId] = useState("");

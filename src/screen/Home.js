@@ -6,12 +6,8 @@ import {StaffContext} from "../context/Staff";
 
 const Home = ({navigation}) => {
 
-    const {staff} = useContext(StaffContext);
+    const {staff, dispatch} = useContext(StaffContext);
 
-    useEffect(() => {
-        setStaffId(staff.staffId);
-        setStaffName(staff.name);
-    }, []);
 
     const [staffId, setStaffId] = useState();
     const [staffName, setStaffName] = useState();
@@ -25,38 +21,51 @@ const Home = ({navigation}) => {
         navigation.navigate("StaffManage");
     }
 
+    function moveCustomer() {
+        navigation.navigate("CustomerManage");
+    }
+
+    function moveContract() {
+
+    }
+
+    function logout(){
+        dispatch("", "", "");
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.textView}>
-                <Text style={styles.staffText}>{staffId}, {department}, {staffName}님 환영합니다~!</Text>
+                <Text style={styles.staffText}>{staff.staffId}, {staff.department}, {staff.staffName} 님 {`\n`}환영합니다~!</Text>
                 <Text style={styles.helloText}>오늘도 아좌좌~~!</Text>
             </View>
 
             {
-                department === "Design" ? (
+                staff.department === "보험 설계부" ? (
                     <View style={styles.buttonView}>
                         <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                         <CustomMainButton buttonText="보험 관리" func={moveInsurance} />
                     </View>
 
                 ) : (
-                    department === "Underwriting" ? (
+                    staff.department === "인수 심사부" ? (
                         <View style={styles.buttonView}>
                             <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                             <CustomMainButton buttonText={"인수 심사 관리"}/>
                         </View>
                     ) : (
-                        department === "Sales" ? (
+                        staff.department === "영업 관리부" ? (
                             <View style={styles.buttonView}>
                                 <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
-                                <CustomMainButton buttonText={"고객 관리"}/>
-                                <CustomMainButton buttonText={"보험 계약 관리"}/>
+                                <CustomMainButton buttonText={"고객 관리"} func={moveCustomer}/>
+                                <CustomMainButton buttonText={"보험 계약 관리"} func={moveContract}/>
                             </View>
                         ) : (
-                            department === "Human" ? (
+                            staff.department === "인사 관리부" ? (
                                 <View style={styles.buttonView}>
                                     <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                                     <CustomMainButton buttonText={"인사 관리"} func={moveStaff}/>
+                                    <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
                                 </View>
                             ) : (
                                 <View style={styles.buttonView}>

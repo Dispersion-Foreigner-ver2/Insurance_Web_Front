@@ -2,6 +2,8 @@ import React from "react";
 import {StaffProvider} from "./context/Staff";
 import Navigation from "./navigation";
 import UnderwriteManage from "./screen/underwrite/UnderwriteManage";
+import {CompensationJudge, CompensationManage, CustomerManage} from "./screen";
+
 
 
 const App = () => {
@@ -11,7 +13,8 @@ const App = () => {
         <StaffProvider>
             <Navigation />
         </StaffProvider>
-        // <UnderwriteManage/>
+        // <CustomerManage/>
+
     );
 };
 

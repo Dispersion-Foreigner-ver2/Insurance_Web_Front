@@ -1,12 +1,13 @@
 import React, {useContext, useRef, useState} from "react";
-import {SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
 import CustomButton from "../../component/CustomButton"
 import {StaffContext} from "../../context/Staff";
+import axios from "axios";
 
 
 
 const Login = ({navigation}) => {
-    const {dispatch} = useContext(StaffContext);
+    const {staff, dispatch} = useContext(StaffContext);
 
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
@@ -16,29 +17,35 @@ const Login = ({navigation}) => {
 
 
     function login() {
-        const staff = {id, pw}
-        dispatch(staff);
+        // const staff = {id, pw}
+        // dispatch(staff);
 
-        // if (id.trim() === "") {
-        //     Alert.alert("아이디를 입력해 주세요.");
-        // }else if (pw.trim() === "") {
-        //     Alert.alert("비밀번호를 입력해 주세요.");
-        // } else {
-        //     axios.post("http://localhost:8080/login",
-        //         null,
-        //         {params: {staffId: id, password: pw}})
-        //         .then(function (resp) {
-        //             if (resp.data !== null && resp.data != "") {
-        //                 alert("로그인 성공");
-        //                 navigation.navigate('Home');
-        //             } else {
-        //                 alert("로그인 실패\n 아이디나 비밀번호를 확인하세요.");
-        //                 setId("");
-        //                 setPw("");
-        //             }
-        //         })
-        //     ;
-        // }
+        if (id.trim() === "") {
+            Alert.alert("아이디를 입력해 주세요.");
+        }else if (pw.trim() === "") {
+            Alert.alert("비밀번호를 입력해 주세요.");
+        } else {
+            axios.post("http://localhost:8080/login",
+                null,
+                {params: {staffId: id, password: pw}})
+                .then(function (resp) {
+                    if (resp.data.result.message === null) {
+                        alert("로그인 성공");
+                        const staffId = resp.data.result.staffId;
+                        const name = resp.data.result.staffName;
+                        const department = resp.data.result.department;
+
+                        dispatch({staffId, name, department})
+                    } else {
+                        console.log(resp.data.result);
+                        setId("");
+                        setPw("");
+                    }
+                }).catch(function (e){
+                    console.log(e)
+            })
+            ;
+        }
     }
 
     function join() {

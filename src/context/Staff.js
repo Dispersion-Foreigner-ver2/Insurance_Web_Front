@@ -1,14 +1,14 @@
 import React, { useState, createContext } from 'react';
 
 const StaffContext = createContext({
-    staff: { staffId: null, name: null },
+    staff: { staffId: null, name: null, department: null },
     dispatch: () => {},
 });
 
 const StaffProvider = ({ children }) => {
     const [staff, setStaff] = useState({});
-    const dispatch = ({ staffId, name }) => {
-        setStaff({ staffId, name });
+    const dispatch = ({ staffId, name, department}) => {
+        setStaff({ staffId, name, department });
     };
 
     const value = { staff, dispatch };
