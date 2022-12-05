@@ -45,6 +45,7 @@ const Home = ({navigation}) => {
                     <View style={styles.buttonView}>
                         <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                         <CustomMainButton buttonText="보험 관리" func={moveInsurance} />
+                        <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
                     </View>
 
                 ) : (
@@ -52,6 +53,7 @@ const Home = ({navigation}) => {
                         <View style={styles.buttonView}>
                             <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                             <CustomMainButton buttonText={"인수 심사 관리"}/>
+                            <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
                         </View>
                     ) : (
                         staff.department === "영업 관리부" ? (
@@ -59,6 +61,7 @@ const Home = ({navigation}) => {
                                 <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                                 <CustomMainButton buttonText={"고객 관리"} func={moveCustomer}/>
                                 <CustomMainButton buttonText={"보험 계약 관리"} func={moveContract}/>
+                                <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
                             </View>
                         ) : (
                             staff.department === "인사 관리부" ? (
@@ -71,6 +74,7 @@ const Home = ({navigation}) => {
                                 <View style={styles.buttonView}>
                                     <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                                     <CustomMainButton buttonText={"보상 운영"}/>
+                                    <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
                                 </View>
                             )
                         )

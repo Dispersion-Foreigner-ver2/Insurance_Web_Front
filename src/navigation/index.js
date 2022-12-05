@@ -11,7 +11,7 @@ const Navigation = () => {
 
     return (
         <NavigationContainer>
-            {staff?.name && staff?.staffId && staff?.department ? <MainNavigation/> : <AuthNavigation/>}
+            {staff?.staffName && staff?.staffId && staff?.department ? <MainNavigation/> : <AuthNavigation/>}
         </NavigationContainer>
 
 

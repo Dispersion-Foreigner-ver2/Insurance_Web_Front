@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import CustomTextInput from "../../component/CustomTextInput";
 import CustomButton from "../../component/CustomButton";
 
 
-const CarInsuranceCreate = () => {
+const CarInsuranceCreate = ({navigation}) => {
 
     const [name, setName] = useState("");
     const [explanation, setExplanation] = useState("");
@@ -13,6 +13,29 @@ const CarInsuranceCreate = () => {
     const [humanDamage, setHumanDamage] = useState(0);
     const [carDamage, setCarDamage] = useState(0);
 
+
+    function checkCreate() {
+
+        Alert.alert("해당 정보가 맞습니까?",
+            `보험 이름: ${name}\n보험 설명: ${explanation}\n보험료: ${premium}\n인적 피해 보상금: ${humanDamage}\n자동차 피해 보상금: ${carDamage}`,
+            [
+                {
+                    text: "예",
+                    onPress: () => createCarInsurance()
+                },
+                {
+                    text: "아니요",
+                    onPress: () => {
+                        setName("");
+                        setExplanation("");
+                        setPremium("");
+                        setHumanDamage("");
+                        setCarDamage("");
+                    }
+                }
+            ]
+        )
+    }
 
     function createCarInsurance() {
         axios.post("http://localhost:8080/insurance/design/car",
@@ -27,8 +50,9 @@ const CarInsuranceCreate = () => {
                 }
             })
             .then(function (resp) {
-                if (resp.data.httpStatus === "ACCEPTED") {
+                if (resp.data.result.name !== "") {
                     alert("보험을 성공적으로 만들었습니다.");
+                    navigation.navigate("InsuranceInquiry", {change: true})
                 } else {
                     alert("보험 생성에 실패하였습니다. 다시 시도해주세요.")
                     setName("");
@@ -86,7 +110,7 @@ const CarInsuranceCreate = () => {
                                  value={carDamage}
                 />
 
-                <CustomButton text={"제출하기"} func={createCarInsurance} />
+                <CustomButton text={"제출하기"} func={checkCreate} />
 
             </ScrollView>
         </SafeAreaView>

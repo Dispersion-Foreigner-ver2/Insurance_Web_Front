@@ -9,7 +9,7 @@ const CustomStaffList = ({staff ,search, pay, move, remove}) => {
             <View style={styles.idTextView}>
                 <Text style={styles.idText}>{staff.id}</Text>
             </View>
-            <View style={styles.idTextView}>
+            <View style={styles.departmentTextView}>
                 <Text style={styles.departmentText}>{staff.department}</Text>
             </View>
             <View style={styles.nameDateTextView}>
@@ -37,11 +37,20 @@ const styles = StyleSheet.create({
     },
     idTextView: {
         padding: 10,
+        width: 60,
         borderColor: "gray",
         borderRightWidth: 0.3,
         height: "100%",
         justifyContent: "center",
 
+    },
+    departmentTextView: {
+        padding: 10,
+        width: 90,
+        borderColor: "gray",
+        borderRightWidth: 0.3,
+        height: "100%",
+        justifyContent: "center",
     },
     idText: {
         fontSize: 20,
@@ -53,18 +62,9 @@ const styles = StyleSheet.create({
         color: "black",
         fontWeight: "bold",
     },
-    typeImageView: {
-        padding: 10,
-        height: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    typeImage: {
-        width: 40,
-        height: 40,
-    },
     nameDateTextView: {
         padding: 10,
+        width: 80,
         height: "100%",
         justifyContent: "center",
     },

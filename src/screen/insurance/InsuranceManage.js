@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {SafeAreaView, StyleSheet, Text, View} from "react-native";
 import CustomMainButton from "../../component/CustomMainButton";
+import axios from "axios";
 
 
 const InsuranceManage = ({navigation}) => {
@@ -8,6 +9,18 @@ const InsuranceManage = ({navigation}) => {
     const [totalCount, setTotalCount] = useState(0);
     const [authorizeCount, setAuthorizeCount] = useState(0);
     const [notAuthorizeCount, setNotAuthorizeCount] = useState(0);
+
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/insurance/count")
+            .then(function (resp) {
+                setTotalCount(resp.data.result.insuranceSum);
+                setAuthorizeCount(resp.data.result.authInsuranceSum);
+                setNotAuthorizeCount(resp.data.result.authNotInsuranceSum);
+            }).catch(function (reason) {
+                alert("오류로 인해 보험 현황을 불러오지 못했습니다.")
+        });
+    }, []);
 
 
     return (

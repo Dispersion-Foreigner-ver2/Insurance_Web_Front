@@ -1,54 +1,71 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import CustomStaffList from "../../component/CustomStaffList";
+import axios from "axios";
 
 
 const StaffManage = ({navigation}) => {
 
-    const staffs = [
-        {id : 1, department: "인사 관리부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 2, department: "인수 심사부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 3, department: "인사 관리부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 4, department: "영업 관리부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 5, department: "인수 심사부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 6, department: "인사 관리부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 7, department: "영업 관리부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 8, department: "영업 관리부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 9, department: "영업 관리부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 10, department: "보험 설계부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 11, department: "보험 설계부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 12, department: "보상 운영부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 13, department: "인수 심사부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
-        {id : 14, department: "보상 운영부", name: "차유상", date:"2002-12-12", ssn: "123123-123123", email: "yoo7969@naver.com", phone: "010-123-123"},
+    const [staffs, setStaffs] = useState([]);
 
-    ];
+
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/staff")
+            .then(function (resp){
+                for (let i = 0; i < resp.data.result.length; i++) {
+                    setStaffs( staffs =>[...staffs, resp.data.result[i]]);
+                }
+            })
+    }, []);
 
     function moveStaffInformation(staff) {
-        navigation.navigate("StaffInformation", {id: staff.id, department: staff.department, name:staff.name, date: staff.date, ssn:staff.ssn, email: staff.email,
-            phone: staff.phone});
-        // navigation.navigate("StaffInformation");
+        axios.get("http://localhost:8080/staff/detail", {
+                params:{
+                    id: staff.id
+                }
+            })
+            .then(function (resp){
+                navigation.navigate("StaffInformation", {id: resp.data.result.id, department: resp.data.result.department, name:resp.data.result.name, joinDate: resp.data.result.joinDate, ssn:resp.data.result.ssn, email: resp.data.result.email,
+                    phoneNum: resp.data.result.phoneNum});
+            })
+
     }
 
-    function moveStaffPayManage() {
-        navigation.navigate("StaffPayManage");
+    function moveStaffPayManage(staff) {
+        axios.get("http://localhost:8080/staff/salary", {
+            params:{
+                id: staff.id
+            }})
+            .then(function (resp){
+                navigation.navigate("StaffPayManage", {position: resp.data.result.position, workDay: resp.data.result.workDay,
+                    result: resp.data.result.result, totalSalary: resp.data.result.totalSalary,});
+            })
     }
-
-    function move(staff) {
+e
+    function changeDepartmentAlert(staff) {
         if (staff.department === "인사 관리부") {
             Alert.alert("부서 변경",
                 "변경하실 부서를 선택해 주세요.",
                 [
                     {
-                        text: '보험 설계부'
+                        text: '보험 설계부',
+                        onPress:() => changeDepartment(staff,1),
                     },
                     {
-                        text: '인수 심사부'
+                        text: '인수 심사부',
+                        onPress:() =>  changeDepartment(staff,2),
                     },
                     {
-                        text: '영업 관리부'
+                        text: '영업 관리부',
+                        onPress:() =>  changeDepartment(staff,3),
                     },
                     {
-                        text: '보상 운영부'
+                        text: '보상 운영부',
+                        onPress:() =>  changeDepartment(staff,5),
+                    },
+                    {
+                    text: '취소',
                     },
 
                 ]
@@ -58,18 +75,24 @@ const StaffManage = ({navigation}) => {
                 "변경하실 부서를 선택해 주세요.",
                 [
                     {
-                        text: '인사 관리부'
+                        text: '인사 관리부',
+                        onPress:() =>  changeDepartment(staff,4),
                     },
                     {
-                        text: '인수 심사부'
+                        text: '인수 심사부',
+                        onPress:() =>  changeDepartment(staff,2),
                     },
                     {
-                        text: '영업 관리부'
+                        text: '영업 관리부',
+                        onPress:() =>  changeDepartment(staff,3),
                     },
                     {
-                        text: '보상 운영부'
+                        text: '보상 운영부',
+                        onPress:() =>  changeDepartment(staff,5),
                     },
-
+                    {
+                        text: '취소',
+                    },
                 ]
             );
         }else if (staff.department === "인수 심사부") {
@@ -77,18 +100,24 @@ const StaffManage = ({navigation}) => {
                 "변경하실 부서를 선택해 주세요.",
                 [
                     {
-                        text: '인사 관리부'
+                        text: '인사 관리부',
+                        onPress:() =>  changeDepartment(staff,4),
                     },
                     {
-                        text: '보험 설계부'
+                        text: '보험 설계부',
+                        onPress:() =>  changeDepartment(staff,1),
                     },
                     {
-                        text: '영업 관리부'
+                        text: '영업 관리부',
+                        onPress:() =>  changeDepartment(staff,3),
                     },
                     {
-                        text: '보상 운영부'
+                        text: '보상 운영부',
+                        onPress:() =>  changeDepartment(staff,5),
                     },
-
+                    {
+                        text: '취소',
+                    },
                 ]
             );
         }else if (staff.department === "영업 관리부") {
@@ -96,18 +125,24 @@ const StaffManage = ({navigation}) => {
                 "변경하실 부서를 선택해 주세요.",
                 [
                     {
-                        text: '인사 관리부'
+                        text: '인사 관리부',
+                        onPress:() =>  changeDepartment(staff,4),
                     },
                     {
-                        text: '인수 심사부'
+                        text: '인수 심사부',
+                        onPress:() =>  changeDepartment(staff,2),
                     },
                     {
-                        text: '보험 설계부'
+                        text: '보험 설계부',
+                        onPress:() =>  changeDepartment(staff,1),
                     },
                     {
-                        text: '보상 운영부'
+                        text: '보상 운영부',
+                        onPress:() =>  changeDepartment(staff,5),
                     },
-
+                    {
+                        text: '취소',
+                    },
                 ]
             );
         }else if (staff.department === "보상 운영부") {
@@ -115,25 +150,71 @@ const StaffManage = ({navigation}) => {
                 "변경하실 부서를 선택해 주세요.",
                 [
                     {
-                        text: '인사 관리부'
+                        text: '인사 관리부',
+                        onPress:() =>  changeDepartment(staff,4),
                     },
                     {
-                        text: '인수 심사부'
+                        text: '인수 심사부',
+                        onPress:() =>  changeDepartment(staff,2),
                     },
                     {
-                        text: '영업 관리부'
+                        text: '영업 관리부',
+                        onPress:() =>  changeDepartment(staff,3),
                     },
                     {
-                        text: '보험 설계부'
+                        text: '보험 설계부',
+                        onPress:() =>  changeDepartment(staff,1),
                     },
-
+                    {
+                        text: '취소',
+                    },
                 ]
             );
         }
     }
 
-    function remove(staff) {
+    function changeDepartment(staff, department) {
+        axios.post("http://localhost:8080/staff/department",
+            null, {
+                params: {id: staff.id, changeDepartment: department}
+            }).then(function (resp) {
+            alert(resp.data.result.message)
 
+            setStaffs([]);
+            axios.get("http://localhost:8080/staff")
+                .then(function (resp){
+                    for (let i = 0; i < resp.data.result.length; i++) {
+                        setStaffs( staffs =>[...staffs, resp.data.result[i]]);
+                    }
+                    console.log(staffs)
+                })
+
+        }).catch(function (reason) {
+            alert("네트워크 오류");
+        });
+
+
+
+
+    }
+
+    function remove(staff) {
+        axios.delete("http://localhost:8080/staff"
+            ,{
+                params: {id: staff.id}
+            }).then(function (resp) {
+            alert(resp.data.result.message)
+
+            setStaffs([]);
+            axios.get("http://localhost:8080/staff")
+                .then(function (resp){
+                    for (let i = 0; i < resp.data.result.length; i++) {
+                        setStaffs( staffs =>[...staffs, resp.data.result[i]]);
+                    }
+                })
+        }).catch(function (reason) {
+            alert("네트워크 오류");
+        });
     }
 
 
@@ -144,9 +225,9 @@ const StaffManage = ({navigation}) => {
                     <CustomStaffList key={staff.id}
                                      staff={staff}
                                      search={()=>moveStaffInformation(staff)}
-                                     pay={()=>moveStaffPayManage()}
-                                     move={() => move(staff)}
-                                     // remove={() => remove(staff)}
+                                     pay={()=>moveStaffPayManage(staff)}
+                                     move={() => changeDepartmentAlert(staff)}
+                                     remove={() => remove(staff)}
                     />
                 )}
             </ScrollView>

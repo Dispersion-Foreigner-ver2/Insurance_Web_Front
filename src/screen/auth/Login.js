@@ -17,8 +17,6 @@ const Login = ({navigation}) => {
 
 
     function login() {
-        // const staff = {id, pw}
-        // dispatch(staff);
 
         if (id.trim() === "") {
             Alert.alert("아이디를 입력해 주세요.");
@@ -32,10 +30,12 @@ const Login = ({navigation}) => {
                     if (resp.data.result.message === null) {
                         alert("로그인 성공");
                         const staffId = resp.data.result.staffId;
-                        const name = resp.data.result.staffName;
+                        const staffName = resp.data.result.staffName;
                         const department = resp.data.result.department;
 
-                        dispatch({staffId, name, department})
+                        dispatch({staffId, staffName, department})
+
+                        console.log(staff)
                     } else {
                         console.log(resp.data.result);
                         setId("");

@@ -25,10 +25,10 @@ const Join = ({navigation}) => {
                         `ID는 ${id} 이며 PW는 ${pw} 입니다.`);
 
                     const staffId = resp.data.result.staffId;
-                    const name = resp.data.result.staffName;
+                    const staffName = resp.data.result.staffName;
                     const department = resp.data.result.department;
 
-                    dispatch({staffId, name, department})
+                    dispatch({staffId, staffName, department})
                 } else {
                     Alert.alert("회원가입 오류", resp.data.result.message);
                     setId("");

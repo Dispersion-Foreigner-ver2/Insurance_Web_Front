@@ -3,52 +3,37 @@ import {Image, StyleSheet, Text, View} from "react-native";
 import CustomIconButton from "../component/CustomIconButton";
 
 
-const CustomInsuranceList = ({authorizeInsurance, deleteInsurance}) => {
-
-    const [id, setId] = useState("123");
-    const [type, setType] = useState("fire");
-    const [name, setName] = useState("화재 보험");
-    const [exp, setExp] = useState("화재 보험 설명...");
-    const [authorize, setAuthorize] = useState(false);
-
-
-    const [typeIcon, setTypeIcon] = useState("");
-
-    useEffect(() => {
-        switch (type) {
-            case "fire":
-                setTypeIcon("../../assets/icons/fire.png");
-            case "car" :
-                setTypeIcon("../../assets/icons/car.png");
-            case "ship" :
-                setTypeIcon("../../assets/icons/ship.png");
-        }
-    },[]);
+const CustomInsuranceList = ({insuranceInformation,authorizeInsurance, deleteInsurance}) => {
 
 
     return (
         <View style={styles.container}>
             <View style={styles.idTextView}>
-                <Text style={styles.idText}>{id}</Text>
+                <Text style={styles.idText}>{insuranceInformation.insurance.id}</Text>
             </View>
             <View style={styles.typeImageView}>
-                <Image source={require("../../assets/icons/fire.png")} style={styles.typeImage}/>
+                {insuranceInformation.insuranceType === "C" ?
+                    (<Image source={require("../../assets/icons/car.png")} style={styles.typeImage}/>)
+                    : (insuranceInformation.insuranceType === "F" ? (
+                        <Image source={require("../../assets/icons/fire.png")} style={styles.typeImage}/>
+                    ) : (
+                        <Image source={require("../../assets/icons/ship.png")} style={styles.typeImage}/>
+                    ))}
+
             </View>
             <View style={styles.nameExpTextView}>
-                <Text style={styles.nameText}>{name}</Text>
-                <Text style={styles.expText}>{exp}</Text>
+                <Text style={styles.nameText}>{insuranceInformation.insurance.name}</Text>
+                <Text style={styles.expText}>{insuranceInformation.insurance.explanation}</Text>
             </View>
-            {authorize === true ? (
-                <View style={styles.checkImageView}>
+            <View style={styles.checkImageView}>
+            {insuranceInformation.insurance.authorization === true ? (
                     <Image style={styles.checkImage} source={require("../../assets/icons/check.png")} />
-                </View>
             ) :(
-                <View style={styles.checkImageView}>
                     <Image style={styles.checkImage}  source={require("../../assets/icons/no_check.png")} />
-                </View>
             )}
-            {authorize === false && <CustomIconButton func={authorizeInsurance} source={require("../../assets/icons/edit.png")}/> }
+            {insuranceInformation.insurance.authorization === false && <CustomIconButton func={authorizeInsurance} source={require("../../assets/icons/edit.png")}/> }
             <CustomIconButton func={deleteInsurance} source={require("../../assets/icons/delete.png")}/>
+            </View>
         </View>
     );
 };
@@ -66,6 +51,8 @@ const styles = StyleSheet.create({
     },
     idTextView: {
         padding: 10,
+        width: 60,
+
         borderColor: "gray",
         borderRightWidth: 0.3,
         height: "100%",
@@ -73,6 +60,7 @@ const styles = StyleSheet.create({
 
     },
     idText: {
+        textAlign: "center",
         fontSize: 30,
         color: "black",
         fontWeight: "bold",
@@ -89,6 +77,7 @@ const styles = StyleSheet.create({
     },
     nameExpTextView: {
         padding: 10,
+        width: 90,
         height: "100%",
         justifyContent: "center",
         marginRight: 20,
@@ -106,9 +95,10 @@ const styles = StyleSheet.create({
         color: "gray",
     },
     checkImageView: {
-        padding: 10,
+        flexDirection: "row",
+        width: 150,
         height: "100%",
-        justifyContent: "center",
+        justifyContent: "space-between",
         alignItems: "center",
     },
     checkImage: {

@@ -4,7 +4,7 @@ import CustomTextInput from "../../component/CustomTextInput";
 import axios from "axios";
 import CustomButton from "../../component/CustomButton";
 
-const FireInsuranceCreate = () => {
+const FireInsuranceCreate = ({navigation, route}) => {
 
     const [name, setName] = useState("");
     const [explanation, setExplanation] = useState("");
@@ -15,16 +15,13 @@ const FireInsuranceCreate = () => {
 
 
     function checkCreate() {
-        let check = false;
 
         Alert.alert("해당 정보가 맞습니까?",
             `보험 이름: ${name}\n보험 설명: ${explanation}\n보험료: ${premium}\n주변 피해 보상금: ${surroundingDamage}\n인적 피해 보상금: ${humanDamage}\n건물 피해 보상금: ${buildingDamage}`,
             [
                 {
                     text: "예",
-                    onPress: () => createFireInsurance
-
-
+                    onPress: () => createFireInsurance()
                 },
                 {
                     text: "아니요",
@@ -55,8 +52,9 @@ const FireInsuranceCreate = () => {
                 }
             })
             .then(function (resp) {
-                if (resp.data.httpStatus === "ACCEPTED") {
+                if (resp.data.result.name !== "") {
                     alert("보험을 성공적으로 만들었습니다.");
+                    navigation.navigate("InsuranceInquiry", {change: true})
                 } else {
                     alert("보험 생성에 실패하였습니다. 다시 시도해주세요.")
                     setName("");

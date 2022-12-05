@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import CustomTextInput from "../../component/CustomTextInput";
 import axios from "axios";
 import CustomButton from "../../component/CustomButton";
 
-const SeaInsuranceCreate = () => {
+const SeaInsuranceCreate = ({navigation}) => {
 
     const [name, setName] = useState("");
     const [explanation, setExplanation] = useState("");
@@ -12,6 +12,29 @@ const SeaInsuranceCreate = () => {
     const [generalDamage, setGeneralDamage] = useState(0);
     const [revenueDamage, setRevenueDamage] = useState(0);
 
+
+    function checkCreate() {
+
+        Alert.alert("해당 정보가 맞습니까?",
+            `보험 이름: ${name}\n보험 설명: ${explanation}\n보험료: ${premium}\n제반 손해 보상금: ${generalDamage}\n수익 손해 보상금: ${revenueDamage}`,
+            [
+                {
+                    text: "예",
+                    onPress: () => createSeaInsurance()
+                },
+                {
+                    text: "아니요",
+                    onPress: () => {
+                        setName("");
+                        setExplanation("");
+                        setPremium("");
+                        setRevenueDamage("");
+                        setGeneralDamage("");
+                    }
+                }
+            ]
+        )
+    }
 
     function createSeaInsurance() {
         axios.post("http://localhost:8080/insurance/design/sea",
@@ -26,8 +49,9 @@ const SeaInsuranceCreate = () => {
                 }
             })
             .then(function (resp) {
-                if (resp.data.httpStatus === "ACCEPTED") {
+                if (resp.data.result.name !== "") {
                     alert("보험을 성공적으로 만들었습니다.");
+                    navigation.navigate("InsuranceInquiry", {change: true})
                 } else {
                     alert("보험 생성에 실패하였습니다. 다시 시도해주세요.")
                     setName("");
@@ -83,7 +107,7 @@ const SeaInsuranceCreate = () => {
                                  value={revenueDamage}
                 />
 
-                <CustomButton text={"제출하기"} func={createSeaInsurance} />
+                <CustomButton text={"제출하기"} func={() => checkCreate()} />
 
             </ScrollView>
         </SafeAreaView>

@@ -1,11 +1,42 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import CustomInsuranceList from "../../component/CustomInsuranceList";
+import axios from "axios";
 
-const InsuranceInquiry = ({navigation}) => {
+const InsuranceInquiry = ({navigation, route}) => {
 
-    const [insurance, setInsurance] = useState([]);
-    const [insuranceId, setInsuranceId] = useState(0);
+    const [insurances, setInsurances] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/insurance/all")
+            .then(function (resp) {
+                setInsurances([])
+                for (let i = 0; i < resp.data.result.length; i++) {
+                    setInsurances( insurances =>[...insurances, resp.data.result[i]]);
+                }
+            });
+    },[]);
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/insurance/all")
+            .then(function (resp) {
+                setInsurances([])
+                for (let i = 0; i < resp.data.result.length; i++) {
+                    setInsurances( insurances =>[...insurances, resp.data.result[i]]);
+                }
+            });
+        route.change = false;
+    },[route]);
+
+    function refresh() {
+        axios.get("http://localhost:8080/insurance/all")
+            .then(function (resp) {
+                setInsurances([])
+                for (let i = 0; i < resp.data.result.length; i++) {
+                    setInsurances( insurances =>[...insurances, resp.data.result[i]]);
+                }
+            });
+    }
 
     function createInsurance(){
         Alert.alert(
@@ -41,13 +72,14 @@ const InsuranceInquiry = ({navigation}) => {
     }
 
 
-    function authorize() {
+    function checkAuthorize(insurance) {
         Alert.alert(
             "해당 보험을 인가 받을까요?",
             null,
             [
                 {
                     text: "예",
+                    onPress: () =>  authorize(insurance)
                 },
                 {
                     text: "아니요",
@@ -56,7 +88,25 @@ const InsuranceInquiry = ({navigation}) => {
         )
     }
 
-    function deleteInsurance()
+
+    function authorize(insurance) {
+
+        axios.post("http://localhost:8080/insurance/auth",
+            null, {
+                params: {id: insurance.insurance.id}
+            })
+            .then(function (resp) {
+                Alert.alert(
+                    "보험 인가 성공",
+                    resp.data.result.message
+                );
+                refresh();
+            }).catch(function (reason) {
+                alert(reason)
+        });
+    }
+
+    function checkDeleteInsurance(insurance)
     {
         Alert.alert(
             "해당 보험을 삭제할까요?",
@@ -64,12 +114,24 @@ const InsuranceInquiry = ({navigation}) => {
             [
                 {
                     text: "예",
+                    onPress: () =>  deleteInsurance(insurance)
                 },
                 {
                     text: "아니요",
                 },
             ]
         )
+    }
+
+    function deleteInsurance(insurance) {
+        axios.delete("http://localhost:8080/insurance/delete", {
+            params: {id: insurance.insurance.id}
+        }).then(function (resp) {
+            alert(resp.data.result.message);
+            refresh();
+        }).catch(function (reason) {
+            alert(reason.message);
+        });
     }
 
 
@@ -84,10 +146,10 @@ const InsuranceInquiry = ({navigation}) => {
 
             </View>
             <ScrollView style={styles.listView}>
-                <CustomInsuranceList authorizeInsurance={authorize} deleteInsurance={deleteInsurance}/>
-                <CustomInsuranceList authorizeInsurance={authorize} deleteInsurance={deleteInsurance}/>
-                <CustomInsuranceList authorizeInsurance={authorize} deleteInsurance={deleteInsurance}/>
-                <CustomInsuranceList authorizeInsurance={authorize} deleteInsurance={deleteInsurance}/>
+                {insurances.map((insurance) =>
+                    <CustomInsuranceList key={insurance.insurance.id} insuranceInformation={insurance} authorizeInsurance={() => checkAuthorize(insurance)} deleteInsurance={() => checkDeleteInsurance(insurance)}/>
+                )}
+
             </ScrollView>
         </SafeAreaView>
     );
