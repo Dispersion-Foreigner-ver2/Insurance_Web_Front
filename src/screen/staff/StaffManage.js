@@ -13,6 +13,7 @@ const StaffManage = ({navigation}) => {
     useEffect(() => {
         axios.get("http://localhost:8080/staff")
             .then(function (resp){
+                setStaffs([]);
                 for (let i = 0; i < resp.data.result.length; i++) {
                     setStaffs( staffs =>[...staffs, resp.data.result[i]]);
                 }
@@ -33,16 +34,10 @@ const StaffManage = ({navigation}) => {
     }
 
     function moveStaffPayManage(staff) {
-        axios.get("http://localhost:8080/staff/salary", {
-            params:{
-                id: staff.id
-            }})
-            .then(function (resp){
-                navigation.navigate("StaffPayManage", {position: resp.data.result.position, workDay: resp.data.result.workDay,
-                    result: resp.data.result.result, totalSalary: resp.data.result.totalSalary,});
-            })
+        navigation.navigate("StaffPayManage", {id : staff.id });
+
     }
-e
+
     function changeDepartmentAlert(staff) {
         if (staff.department === "인사 관리부") {
             Alert.alert("부서 변경",

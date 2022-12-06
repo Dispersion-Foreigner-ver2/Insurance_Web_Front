@@ -72,31 +72,31 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     typeImage: {
-        width: 40,
-        height: 40,
+        width: 30,
+        height: 30,
     },
     nameExpTextView: {
-        padding: 10,
-        width: 90,
+        width: 120,
         height: "100%",
         justifyContent: "center",
         marginRight: 20,
     },
     nameText: {
-        fontSize: 25,
+        fontSize: 23,
         color: "black",
         fontWeight: "bold",
-        marginBottom: 5,
+        marginBottom: 2,
 
     },
     expText: {
-        fontSize: 15,
+        fontSize: 13,
         fontStyle: "italic",
         color: "gray",
     },
     checkImageView: {
         flexDirection: "row",
         width: 150,
+        padding: 13,
         height: "100%",
         justifyContent: "space-between",
         alignItems: "center",

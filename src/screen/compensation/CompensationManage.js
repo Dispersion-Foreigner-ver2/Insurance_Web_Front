@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
@@ -8,47 +8,27 @@ const CompensationManage = () => {
     //계약 받아 올 때 보험 종류도 같이 받아오기 -> 보험 종류로 면부책 판단하는 것이 달라짐
     //주의) 인수 심사 받은 보험만 표시
 
-    const [searchSubject, setSearchSubject] = useState([
-        {label: "계약 ID", value: "contractId"},
-        {label: "고객 ID", value: "customerId"},
-        {label: "보험 ID", value: "insuranceId"},
-    ]);
-    const [searchSubjectValue, setSearchSubjectValue] = useState("contractId");
-    const [searchSubjectOpen, setSearchSubjectOpen] = useState(false);
     const [searchContent, setSearchContent] = useState();
 
     const [contracts, setContracts] = useState([]);
-    const [contract, setContract] = useState();
+
+    useEffect(() => {
+        //계약 전체 리스트 받아오기
+    }, []);
+
+
 
     function search() {
-        if (searchSubjectValue === "contractId") {
-            alert("계약 id로 계약 찾기")
-            //계약 id로 계약 찾기
-        } else if (searchSubjectValue === "customerId") {
-            alert("고객 id로 계약 찾기")
-            //고객 id로 계약 찾기
-        } else {
-            alert("보험 id로 계약 찾기")
-            //보험 id로 계약 찾기
-        }
+
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.searchView}>
-                <DropDownPicker
-                    items={searchSubject}
-                    setItems={setSearchSubject}
-                    value={searchSubjectValue}
-                    setValue={setSearchSubjectValue}
-                    open={searchSubjectOpen}
-                    setOpen={setSearchSubjectOpen}
-                    style={styles.searchPicker}
-                    containerStyle={styles.searchPickerContainer}
-                    dropDownStyle={{backgroundColor: '#fafafa'}}
-                />
                 <TextInput style={styles.searchInput}
+                           placeholder={"고객 ID를 입력해 주세요."}
                            returnKeyType={"done"}
+                           onChangeText={text => setSearchContent(text)}
                            onSubmitEditing={search}
                 />
                 <TouchableOpacity style={styles.searchButton} onPress={search}>
