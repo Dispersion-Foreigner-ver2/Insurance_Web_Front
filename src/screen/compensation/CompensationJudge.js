@@ -170,7 +170,7 @@ const CompensationJudge = ({navigation, route}) => {
 
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             <ScrollView>
                 <View style={styles.selectView}>
                     <Text style={styles.selectViewText}>사고 발생 주체</Text>
@@ -231,6 +231,9 @@ const CompensationJudge = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "white"
+    },
     selectView: {
         margin: 10,
     },

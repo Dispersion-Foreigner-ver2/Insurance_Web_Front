@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from "react-native";
 import CustomIconButton from "./CustomIconButton";
 
 
-const CustomUnderwriteList = ({contract}) => {
+const CustomUnderwriteList = ({contract, underwrite}) => {
 
     return (
         contract.underwrite === true ? (
@@ -26,7 +26,7 @@ const CustomUnderwriteList = ({contract}) => {
                     <Text style={styles.expText}>{contract.customerName}</Text>
                 </View>
                 <View style={styles.buttonView}>
-                    <CustomIconButton source={require("../../assets/icons/underwrite.png")}/>
+                    <CustomIconButton func={underwrite} source={require("../../assets/icons/underwrite.png")}/>
                 </View>
             </View>
         )

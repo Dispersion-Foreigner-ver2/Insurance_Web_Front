@@ -8,7 +8,7 @@ import {
     ContractManage,
     ContractSelect,
     CustomerJoin,
-    CustomerManage
+    CustomerManage, Login, StartPage
 } from "./screen";
 import CompensationCalculate from "./screen/compensation/CompensationCalculate";
 import CustomerPayManage from "./screen/customer/CustomerPayManage";
@@ -19,13 +19,10 @@ const App = () => {
 
 
     return (
-        // <StaffProvider>
-        //     <Navigation />
-        // </StaffProvider>
-        // <ContractManage/>
-        // <ContractSelect/>
-        // <CustomerJoin/>
-        <UnderwriteManage/>
+        <StaffProvider>
+            <Navigation />
+        </StaffProvider>
+
     );
 };
 

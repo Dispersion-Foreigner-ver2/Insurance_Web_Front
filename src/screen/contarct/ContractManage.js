@@ -144,7 +144,9 @@ const ContractManage = ({navigation}) => {
 
                 <ScrollView style={styles.contractListView}>
                     {contracts.map((contract  =>
-                            <CustomContractList contractId={contract.contractId}
+                            <CustomContractList
+                                                key={contract.contractId}
+                                                contractId={contract.contractId}
                                                 customerId={contract.customer.id}
                                                 customerName={contract.customer.name}
                                                 insuranceId={contract.insurance.id}
@@ -243,6 +245,7 @@ const styles = StyleSheet.create({
     },
 
     contractListView: {
+        backgroundColor: "white",
         height: "70%"
     },
 
@@ -253,6 +256,7 @@ const styles = StyleSheet.create({
 
 
     contractButtonContainer: {
+        backgroundColor: "white",
         height: "4%",
         alignItems: "center",
         zIndex: 50,

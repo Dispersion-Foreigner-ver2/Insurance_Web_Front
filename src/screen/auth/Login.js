@@ -27,20 +27,15 @@ const Login = ({navigation}) => {
                 null,
                 {params: {staffId: id, password: pw}})
                 .then(function (resp) {
-                    console.log(resp.data)
-
-                    if (resp.data.result.message === null) {
+                    if (resp.data.code === 200) {
                         const staffId = resp.data.result.staffId;
                         const staffName = resp.data.result.staffName;
                         const department = resp.data.result.department;
 
                         dispatch({staffId, staffName, department})
 
-
                     } else {
-                        alert(" 오류 발생");
-                        setId("");
-                        setPw("");
+                        alert(resp.data.message);
                     }
                 }).catch(function (e){
                     alert("네트워크 연결을 확인해주세요.")

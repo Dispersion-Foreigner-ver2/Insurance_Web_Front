@@ -1,6 +1,6 @@
 import React from "react";
 import {createStackNavigator} from "@react-navigation/stack";
-import {Join, Login} from "../screen";
+import {Join, Login, StartPage} from "../screen";
 
 
 
@@ -8,11 +8,19 @@ const AuthStack = createStackNavigator();
 
 const AuthNavigation = () => {
     return (
-        <AuthStack.Navigator >
+        <AuthStack.Navigator>
+            <AuthStack.Screen
+                name="StartPage"
+                component={StartPage}
+                options={{headerShown: false}}
+            />
             <AuthStack.Screen
                 name="Login"
                 component={Login}
-                options={{headerShown: false}}
+                options={{
+                    headerTitle: "",
+                    headerBackTitle: '뒤로가기'
+                }}
             />
             <AuthStack.Screen
                 name="Join"
@@ -20,7 +28,7 @@ const AuthNavigation = () => {
                 options={{
                     headerTitle: "",
                     headerBackTitle: '뒤로가기'
-            }}
+                }}
             />
         </AuthStack.Navigator>
     );

@@ -44,7 +44,10 @@ const CustomerInquiry = ({navigation}) => {
             </View>
             <ScrollView style={styles.listView}>
                 {customers.map((customer) =>
-                    <CustomCustomerList customer={customer} editFunc={edit} removeFunc={remove}/>
+                    <CustomCustomerList customer={customer}
+                                        key={customer.id}
+                                        editFunc={edit}
+                                        removeFunc={remove}/>
                 )}
             </ScrollView>
         </SafeAreaView>

@@ -19,7 +19,7 @@ const UnderwriteManage = () => {
 
     function checkUnderwrite(contractId) {
         Alert.alert("인수 심사",
-            "인수 심사가 아직 진행되지 않았습니다. 인수 시마를 진행하시겠습니까?",
+            "인수 심사가 아직 진행되지 않았습니다. 인수 심사를 진행하시겠습니까?",
             [
                 {
                     text: "예",
@@ -42,7 +42,11 @@ const UnderwriteManage = () => {
         <SafeAreaView style={styles.container}>
             <ScrollView>
                 {contracts.map((contract) =>
-                    <CustomUnderwriteList contract={contract} key={contract.id}/>
+                    <CustomUnderwriteList
+                        contract={contract}
+                        key={contract.id}
+                        underwrite={() => checkUnderwrite(contract.id)}
+                    />
                 )}
             </ScrollView>
         </SafeAreaView>

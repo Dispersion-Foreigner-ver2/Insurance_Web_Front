@@ -8,7 +8,9 @@ import {
     CustomerHouseJoin,
     CustomerInquiry,
     CustomerJoin,
-    CustomerManage, CustomerSelect, CustomerShipJoin,
+    CustomerManage,
+    CustomerSelect,
+    CustomerShipJoin,
     FireInsuranceCreate,
     Home,
     InsuranceInquiry,
@@ -21,36 +23,147 @@ import {
 } from "../screen";
 
 
-
 const MainStack = createStackNavigator();
 
 const MainNavigation = () => {
     return (
         <MainStack.Navigator>
-            <MainStack.Screen name="Home" component={Home}/>
+            <MainStack.Screen name="Home"
+                              component={Home}
+                              options={{headerShown: false}}
+            />
 
-            <MainStack.Screen name="InsuranceManage" component={InsuranceManage}/>
-            <MainStack.Screen name="InsuranceInquiry" component={InsuranceInquiry}/>
-            <MainStack.Screen name="FireInsuranceCreate" component={FireInsuranceCreate}/>
-            <MainStack.Screen name="CarInsuranceCreate" component={CarInsuranceCreate}/>
-            <MainStack.Screen name="SeaInsuranceCreate" component={SeaInsuranceCreate}/>
+            <MainStack.Screen name="InsuranceManage"
+                              component={InsuranceManage}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="InsuranceInquiry"
+                              component={InsuranceInquiry}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="FireInsuranceCreate"
+                              component={FireInsuranceCreate}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="CarInsuranceCreate"
+                              component={CarInsuranceCreate}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="SeaInsuranceCreate"
+                              component={SeaInsuranceCreate}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
 
-            <MainStack.Screen name="StaffManage" component={StaffManage}/>
-            <MainStack.Screen name="StaffInformation" component={StaffInformation}/>
-            <MainStack.Screen name="StaffPayManage" component={StaffPayManage}/>
+            <MainStack.Screen name="StaffManage"
+                              component={StaffManage}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="StaffInformation"
+                              component={StaffInformation}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="StaffPayManage"
+                              component={StaffPayManage}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
 
-            <MainStack.Screen name="UnderwriteManage" component={UnderwriteManage}/>
+            <MainStack.Screen name="UnderwriteManage"
+                              component={UnderwriteManage}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
 
-            <MainStack.Screen name="CustomerManage" component={CustomerManage}/>
-            <MainStack.Screen name="CustomerInquiry" component={CustomerInquiry}/>
-            <MainStack.Screen name="CustomerSelect" component={CustomerSelect}/>
-            <MainStack.Screen name="CustomerJoin" component={CustomerJoin}/>
-            <MainStack.Screen name="CustomerCarJoin" component={CustomerCarJoin}/>
-            <MainStack.Screen name="CustomerHouseJoin" component={CustomerHouseJoin}/>
-            <MainStack.Screen name="CustomerShipJoin" component={CustomerShipJoin}/>
+            <MainStack.Screen name="CustomerManage"
+                              component={CustomerManage}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="CustomerInquiry"
+                              component={CustomerInquiry}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
 
-            <MainStack.Screen name="ContractManage" component={ContractManage}/>
-            <MainStack.Screen name="ContractSelect" component={ContractSelect}/>
+            <MainStack.Screen name="CustomerSelect"
+                              component={CustomerSelect}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="CustomerJoin"
+                              component={CustomerJoin}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="CustomerCarJoin"
+                              component={CustomerCarJoin}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="CustomerHouseJoin"
+                              component={CustomerHouseJoin}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="CustomerShipJoin"
+                              component={CustomerShipJoin}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+
+            <MainStack.Screen name="ContractManage"
+                              component={ContractManage}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="ContractSelect"
+                              component={ContractSelect}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
         </MainStack.Navigator>
     );
 };
