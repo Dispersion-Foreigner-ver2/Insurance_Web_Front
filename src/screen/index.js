@@ -21,12 +21,14 @@ import CustomerSelect from "./customer/CustomerSelect";
 import CustomerShipJoin from "./customer/CustomerShipJoin";
 import CustomerHouseJoin from "./customer/CustomerHouseJoin";
 import CustomerCarJoin from "./customer/CustomerCarJoin";
+import CompensationCalculate from "./compensation/CompensationCalculate";
 import StartPage from "./auth/StartPage";
+
 
 
 export {Login,Join, CustomerJoin, Home, StaffManage, SeaInsuranceCreate,
     FireInsuranceCreate, InsuranceInquiry, InsuranceManage, CarInsuranceCreate,
     StaffInformation, StaffPayManage, UnderwriteManage, CompensationManage,
     CompensationJudge, CustomerManage, CustomerInquiry, ContractManage, ContractSelect,
-    CustomerSelect, CustomerShipJoin, CustomerHouseJoin, CustomerCarJoin, StartPage
+    CustomerSelect, CustomerShipJoin, CustomerHouseJoin, CustomerCarJoin, StartPage, CompensationCalculate
 }

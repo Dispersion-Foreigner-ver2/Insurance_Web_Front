@@ -9,10 +9,6 @@ const Home = ({navigation}) => {
     const {staff, dispatch} = useContext(StaffContext);
 
 
-    const [staffId, setStaffId] = useState();
-    const [staffName, setStaffName] = useState();
-    const [department, setDepartment] = useState("Human");
-
     function moveInsurance() {
         navigation.navigate("InsuranceManage");
     }
@@ -27,6 +23,10 @@ const Home = ({navigation}) => {
 
     function moveContract() {
         navigation.navigate("ContractManage");
+    }
+
+    function moveCompensation(){
+        navigation.navigate("CompensationManage")
     }
 
     function logout(){
@@ -73,7 +73,7 @@ const Home = ({navigation}) => {
                             ) : (
                                 <ScrollView style={styles.buttonView}>
                                     <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
-                                    <CustomMainButton buttonText={"보상 운영"}/>
+                                    <CustomMainButton buttonText={"보상 운영"} func={moveCompensation}/>
                                     <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
                                 </ScrollView>
                             )

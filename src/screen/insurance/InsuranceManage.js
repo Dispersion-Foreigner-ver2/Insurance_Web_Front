@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {SafeAreaView, StyleSheet, Text, View} from "react-native";
+import {Alert, SafeAreaView, StyleSheet, Text, View} from "react-native";
 import CustomMainButton from "../../component/CustomMainButton";
 import axios from "axios";
 
@@ -12,15 +12,23 @@ const InsuranceManage = ({navigation}) => {
 
 
     useEffect(() => {
+        getCount();
+    }, []);
+
+    function getCount() {
         axios.get("http://localhost:8080/insurance/count")
             .then(function (resp) {
-                setTotalCount(resp.data.result.insuranceSum);
-                setAuthorizeCount(resp.data.result.authInsuranceSum);
-                setNotAuthorizeCount(resp.data.result.authNotInsuranceSum);
+                if (resp.data.code === 200) {
+                    setTotalCount(resp.data.result.insuranceSum);
+                    setAuthorizeCount(resp.data.result.authInsuranceSum);
+                    setNotAuthorizeCount(resp.data.result.authNotInsuranceSum);
+                } else {
+                    Alert.alert("개수 불러오기 오류", resp.data.message)
+                }
             }).catch(function (reason) {
-                alert("오류로 인해 보험 현황을 불러오지 못했습니다.")
+            alert("오류로 인해 보험 현황을 불러오지 못했습니다.")
         });
-    }, []);
+    }
 
 
     return (

@@ -2,7 +2,7 @@ import React from "react";
 import {StyleSheet, Text, TextInput, View} from "react-native";
 
 
-const CustomTextInput = ({title, onchangeText, placeholder, keyboardType, value}) => {
+const CustomTextInput = ({title, onchangeText, placeholder, keyboardType, value, pw}) => {
     return (
         <View style={styles.container}>
             <View style={styles.labelContainer}>
@@ -13,6 +13,7 @@ const CustomTextInput = ({title, onchangeText, placeholder, keyboardType, value}
                        keyboardType={keyboardType}
                        style={styles.textInput}
                        value={value}
+                       secureTextEntry={pw}
             />
         </View>
     );
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     container: {
         height: 65,
         position: 'relative',
-        margin: 10,
+        margin: 5,
     },
     labelContainer: {
         position: 'absolute',

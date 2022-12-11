@@ -11,14 +11,22 @@ const StaffManage = ({navigation}) => {
 
 
     useEffect(() => {
+      getStaff()
+    }, []);
+
+    function getStaff() {
         axios.get("http://localhost:8080/staff")
             .then(function (resp){
-                setStaffs([]);
-                for (let i = 0; i < resp.data.result.length; i++) {
-                    setStaffs( staffs =>[...staffs, resp.data.result[i]]);
+                if (resp.data.code === 200) {
+                    setStaffs([]);
+                    for (let i = 0; i < resp.data.result.length; i++) {
+                        setStaffs(staffs => [...staffs, resp.data.result[i]]);
+                    }
+                } else {
+                    Alert.alert("회원 정보 불러오기 오류", resp.data.message)
                 }
             })
-    }, []);
+    }
 
     function moveStaffInformation(staff) {
         axios.get("http://localhost:8080/staff/detail", {
@@ -27,8 +35,20 @@ const StaffManage = ({navigation}) => {
                 }
             })
             .then(function (resp){
-                navigation.navigate("StaffInformation", {id: resp.data.result.id, department: resp.data.result.department, name:resp.data.result.name, joinDate: resp.data.result.joinDate, ssn:resp.data.result.ssn, email: resp.data.result.email,
-                    phoneNum: resp.data.result.phoneNum});
+                if (resp.data.code === 200) {
+                    navigation.navigate("StaffInformation", {
+                        id: resp.data.result.id,
+                        department: resp.data.result.department,
+                        name: resp.data.result.name,
+                        joinDate: resp.data.result.joinDate,
+                        ssn: resp.data.result.ssn,
+                        email: resp.data.result.email,
+                        phoneNum: resp.data.result.phoneNum
+                    });
+                } else {
+                    Alert.alert("회원 정보 불러오기 오류", resp.data.message)
+                }
+
             })
 
     }
@@ -173,16 +193,13 @@ const StaffManage = ({navigation}) => {
             null, {
                 params: {id: staff.id, changeDepartment: department}
             }).then(function (resp) {
-            alert(resp.data.result.message)
-
-            setStaffs([]);
-            axios.get("http://localhost:8080/staff")
-                .then(function (resp){
-                    for (let i = 0; i < resp.data.result.length; i++) {
-                        setStaffs( staffs =>[...staffs, resp.data.result[i]]);
-                    }
-                })
-
+            if (resp.data.code === 200) {
+                alert(resp.data.result.message);
+                setStaffs([]);
+                getStaff();
+            } else {
+                Alert.alert("부서 변경 오류",resp.data.message)
+            }
         }).catch(function (reason) {
             alert("네트워크 오류 발생");
         });
@@ -197,15 +214,12 @@ const StaffManage = ({navigation}) => {
             ,{
                 params: {id: staff.id}
             }).then(function (resp) {
-            alert(resp.data.result.message)
-
-            setStaffs([]);
-            axios.get("http://localhost:8080/staff")
-                .then(function (resp){
-                    for (let i = 0; i < resp.data.result.length; i++) {
-                        setStaffs( staffs =>[...staffs, resp.data.result[i]]);
-                    }
-                })
+            if (resp.data.code === 200) {
+                alert(resp.data.result.message);
+                getStaff();
+            } else {
+                Alert.alert("회원 삭제 오류", resp.data.message);
+            }
         }).catch(function (reason) {
             alert("네트워크 오류 발생");
         });

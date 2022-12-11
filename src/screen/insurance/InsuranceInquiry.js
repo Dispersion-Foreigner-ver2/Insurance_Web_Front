@@ -8,33 +8,28 @@ const InsuranceInquiry = ({navigation, route}) => {
     const [insurances, setInsurances] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/insurance/all")
-            .then(function (resp) {
-                setInsurances([])
-                for (let i = 0; i < resp.data.result.length; i++) {
-                    setInsurances( insurances =>[...insurances, resp.data.result[i]]);
-                }
-            });
+        getInsurance()
     },[]);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/insurance/all")
-            .then(function (resp) {
-                setInsurances([])
-                for (let i = 0; i < resp.data.result.length; i++) {
-                    setInsurances( insurances =>[...insurances, resp.data.result[i]]);
-                }
-            });
+        getInsurance()
         route.change = false;
     },[route]);
 
-    function refresh() {
+
+
+    function getInsurance() {
         axios.get("http://localhost:8080/insurance/all")
             .then(function (resp) {
-                setInsurances([])
-                for (let i = 0; i < resp.data.result.length; i++) {
-                    setInsurances( insurances =>[...insurances, resp.data.result[i]]);
+                if (resp.data.code === 200) {
+                    setInsurances([]);
+                    for (let i = 0; i < resp.data.result.length; i++) {
+                        setInsurances(insurances => [...insurances, resp.data.result[i]]);
+                    }
+                } else {
+                    Alert.alert("보험 불러오기 오류", resp.data.message)
                 }
+
             });
     }
 
@@ -96,11 +91,15 @@ const InsuranceInquiry = ({navigation, route}) => {
                 params: {id: insurance.insurance.id}
             })
             .then(function (resp) {
-                Alert.alert(
-                    "보험 인가 성공",
-                    resp.data.result.message
-                );
-                refresh();
+                if (resp.data.code === 200) {
+                    Alert.alert(
+                        "보험 인가 성공",
+                        resp.data.result.message
+                    );
+                    getInsurance();
+                } else {
+                    Alert.alert("보험 인가 오류", resp.data.message)
+                }
             }).catch(function (reason) {
             alert("네트워크 오류 발생");
         });
@@ -127,8 +126,12 @@ const InsuranceInquiry = ({navigation, route}) => {
         axios.delete("http://localhost:8080/insurance/delete", {
             params: {id: insurance.insurance.id}
         }).then(function (resp) {
-            alert(resp.data.result.message);
-            refresh();
+            if (resp.data.code === 200) {
+                Alert.alert("보험 삭제 성공", resp.data.result.message);
+                getInsurance();
+            } else {
+                Alert.alert("보험 삭제 오류", resp.data.message);
+            }
         }).catch(function (reason) {
             alert("네트워크 오류 발생");
         });

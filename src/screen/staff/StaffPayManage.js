@@ -11,19 +11,26 @@ const StaffPayManage = ({route}) => {
 
 
     useEffect(() => {
+        getPay();
+    }, [])
+
+    function getPay() {
         axios.get("http://localhost:8080/staff/salary", {
             params:{
                 id: route.params.id
             }})
             .then(function (resp){
-                setStaffPaid(resp.data.result)
+                if (resp.data.code === 200) {
+                    setStaffPaid(resp.data.result);
+                } else {
+                    Alert.alert("월급 불러오기 오류", resp.data.message)
+                }
             })
-    }, [])
+    }
 
 
 
     function selectPosition() {
-
         switch (staffPaid.position) {
             case "평사원":
                 Alert.alert(
@@ -227,14 +234,12 @@ const StaffPayManage = ({route}) => {
                     changePosition: position,
                 }
             }).then(function (resp) {
-            alert(resp.data.result.message);
-                axios.get("http://localhost:8080/staff/salary", {
-                    params:{
-                        id: route.params.id
-                    }})
-                    .then(function (resp){
-                        setStaffPaid(resp.data.result)
-                    })
+            if (resp.data.code === 200) {
+                alert(resp.data.result.message);
+                getPay();
+            } else {
+                Alert.alert("직급 변경 오류", resp.data.message)
+            }
         }).catch(function (reason) {
             alert("네트워크 오류 발생");
         });

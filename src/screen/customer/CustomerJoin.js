@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
 import CustomButton from "../../component/CustomButton";
 import axios from "axios";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -72,14 +72,19 @@ const CustomerJoin = ({navigation, route}) => {
                 }
             })
             .then(function (resp) {
-                alert(resp.data.result.message);
-                if (route.params.type === "C") {
-                    navigation.navigate("CustomerCarJoin");
-                }else if (route.params.type === "F") {
-                    navigation.navigate("CustomerHouseJoin");
+                if (resp.data.code === 200) {
+                    alert(resp.data.result.message);
+                    if (route.params.type === "C") {
+                        navigation.navigate("CustomerCarJoin");
+                    } else if (route.params.type === "F") {
+                        navigation.navigate("CustomerHouseJoin");
+                    } else {
+                        navigation.navigate("CustomerShipJoin");
+                    }
                 } else {
-                    navigation.navigate("CustomerShipJoin");
+                    Alert.alert("고객 생성 오류", resp.data.message)
                 }
+
             }).catch(function (reason) {
             alert("네트워크 오류 발생");
         });

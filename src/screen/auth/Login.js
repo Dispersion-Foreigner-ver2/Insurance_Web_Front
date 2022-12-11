@@ -1,23 +1,20 @@
 import React, {useContext, useRef, useState} from "react";
-import {Alert, SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, SafeAreaView, StyleSheet, View} from "react-native";
 import CustomButton from "../../component/CustomButton"
 import {StaffContext} from "../../context/Staff";
 import axios from "axios";
+import CustomTextInput from "../../component/CustomTextInput";
 
 
-
-const Login = ({navigation}) => {
-    const {staff, dispatch} = useContext(StaffContext);
+const Login = ({}) => {
+    const {dispatch} = useContext(StaffContext);
 
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
 
-    const idRef = useRef();
-    const pwRef = useRef();
 
 
     function login() {
-
         if (id.trim() === "") {
             Alert.alert("아이디를 입력해 주세요.");
         }else if (pw.trim() === "") {
@@ -35,7 +32,8 @@ const Login = ({navigation}) => {
                         dispatch({staffId, staffName, department})
 
                     } else {
-                        alert(resp.data.message);
+                        Alert.alert("로그인 오류",resp.data.message);
+
                     }
                 }).catch(function (e){
                     alert("네트워크 연결을 확인해주세요.")
@@ -44,50 +42,24 @@ const Login = ({navigation}) => {
         }
     }
 
-    function join() {
-        navigation.navigate("Join");
-    }
-
 
     return (
-        <SafeAreaView
-            style={styles.container}
-        >
-            <View style={styles.inputView}>
-                <Text style={styles.text}>사원 번호</Text>
-                <TextInput
-                    onChangeText={text=> {setId(text)}}
-                    value={id}
-                    onSubmitEditing={ () => {
-                        setId(id.trim());
-                        pwRef.current.focus();
-                    }}
-                    onBlur={() => {setId(id.trim())}}
-                    placeholder={"사원 번호"}
-                    returnKeyType="next"
-                    keyboardType="number-pad"
-                    style={styles.textInput}
-                />
-            </View>
+        <SafeAreaView style={styles.container}>
 
             <View style={styles.inputView}>
-                <Text style={styles.text}>비밀 번호</Text>
-                <TextInput
-                    ref={pwRef}
-                    value={pw}
-                    onChangeText={text => {setPw(text)}}
-                    placeholder={"비밀 번호"}
-                    onSubmitEditing={ () => {
-                        login();
-                    }}
-                    onBlur={() => {setPw(pw.trim())}}
-                    returnKeyType="done"
-                    secureTextEntry={true}
-                    style={styles.textInput}
+                <CustomTextInput title={"사원 번호"}
+                                 value={id}
+                                 keyboardType={"number-pad"}
+                                 onchangeText={text => setId(text)}
+                />
+
+                <CustomTextInput title={"비밀 번호"}
+                                 value={pw}
+                                 onchangeText={text => setPw(text)}
+                                 pw={true}
                 />
             </View>
             <CustomButton text={"로그인"} func={login}/>
-            <CustomButton text={"회원가입"} func={join} />
         </SafeAreaView>
     );
 }
@@ -95,18 +67,17 @@ const Login = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
         justifyContent: "center",
         backgroundColor: "white"
     },
     inputView: {
-        flexDirection:"row",
-        marginBottom: 20,
-
+        width: "100%",
+        justifyContent: "center",
     },
     text: {
         fontSize: 25,
         marginRight: 20,
+        color: "white"
     },
     textInput: {
         fontSize: 25,
@@ -114,8 +85,6 @@ const styles = StyleSheet.create({
         borderWidth: 0.3,
         borderColor: "gray"
     },
-
-
 });
 
 

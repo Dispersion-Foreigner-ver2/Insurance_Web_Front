@@ -1,7 +1,7 @@
 import React from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import {
-    CarInsuranceCreate,
+    CarInsuranceCreate, CompensationCalculate, CompensationJudge, CompensationManage,
     ContractManage,
     ContractSelect,
     CustomerCarJoin,
@@ -159,6 +159,28 @@ const MainNavigation = () => {
             />
             <MainStack.Screen name="ContractSelect"
                               component={ContractSelect}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+
+            <MainStack.Screen name="CompensationManage"
+                              component={CompensationManage}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="CompensationCalculate"
+                              component={CompensationCalculate}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+            <MainStack.Screen name="CompensationJudge"
+                              component={CompensationJudge}
                               options={{
                                   headerTitle: "",
                                   headerBackTitle: '뒤로가기'

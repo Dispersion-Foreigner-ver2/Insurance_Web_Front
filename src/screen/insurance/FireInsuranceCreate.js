@@ -52,11 +52,11 @@ const FireInsuranceCreate = ({navigation, route}) => {
                 }
             })
             .then(function (resp) {
-                if (resp.data.result.name !== "") {
+                if (resp.data.code === 200) {
                     alert("보험을 성공적으로 만들었습니다.");
                     navigation.navigate("InsuranceInquiry", {change: true})
                 } else {
-                    alert("보험 생성에 실패하였습니다. 다시 시도해주세요.")
+                    Alert.alert("보험 생성 실패", resp.data.message)
                     setName("");
                     setExplanation("");
                     setPremium("");

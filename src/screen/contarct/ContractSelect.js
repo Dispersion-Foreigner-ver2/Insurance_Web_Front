@@ -13,15 +13,24 @@ const ContractSelect = ({navigation}) => {
     const [insuranceId, setInsuranceId] = useState(null);
 
     useEffect(() => {
+
+    }, []);
+
+    function getInsuranceList() {
         axios.get("http://localhost:8080/insurance/all")
             .then(function (resp) {
-                setInsurances([]);
-                for (let i = 0; i < resp.data.result.length; i++) {
-                    setInsurances( insurances =>[...insurances, resp.data.result[i]]);
-                    setSelectValues(selectValues => [...selectValues, false]);
+                if (resp.data.code === 200) {
+                    setInsurances([]);
+                    for (let i = 0; i < resp.data.result.length; i++) {
+                        setInsurances(insurances => [...insurances, resp.data.result[i]]);
+                        setSelectValues(selectValues => [...selectValues, false]);
+                    }
+                } else {
+                    Alert.alert("보험 조회 오류", resp.data.message)
                 }
+
             });
-    }, []);
+    }
 
     function select(id, index) {
         setInsuranceId(index);

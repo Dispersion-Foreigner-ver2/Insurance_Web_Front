@@ -1,9 +1,10 @@
 import React, {useContext, useState} from "react";
-import {Alert, SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 import CustomButton from "../../component/CustomButton";
 import {StaffContext} from "../../context/Staff";
 import axios from "axios";
+import CustomTextInput from "../../component/CustomTextInput";
 
 
 const Join = ({navigation}) => {
@@ -20,7 +21,7 @@ const Join = ({navigation}) => {
                 }
             })
             .then(function (resp) {
-                if (resp.data.result.message === null) {
+                if (resp.data.code === 200) {
                     Alert.alert(`가입을 축하합니다 ${name}님 !`,
                         `ID는 ${id} 이며 PW는 ${pw} 입니다.`);
 
@@ -30,7 +31,7 @@ const Join = ({navigation}) => {
 
                     dispatch({staffId, staffName, department})
                 } else {
-                    Alert.alert("회원가입 오류", resp.data.result.message);
+                    Alert.alert("회원가입 오류", resp.data.message);
                     setId("");
                     setPw("");
                     setName("");
@@ -89,10 +90,8 @@ const Join = ({navigation}) => {
     const [genderOpen, setGenderOpen] = useState(false);
 
 
-
     return (
         <SafeAreaView style={styles.container}>
-
             <DropDownPicker
                 items={departmentIem}
                 setItems={setDepartmentItem}
@@ -120,65 +119,32 @@ const Join = ({navigation}) => {
                 dropDownStyle={{backgroundColor: '#fafafa'}}
             />
 
-            <View style={styles.inputView}>
-            <Text style={styles.text}>사원 번호</Text>
-            <TextInput
-                onChangeText={text=> {setId(text)}}
-                placeholder={"사원 번호"}
-                keyboardType="number-pad"
-                style={styles.textInput}
+            <CustomTextInput value={id}
+                             onchangeText={text => setId(text)}
+                             keyboardType={"number-pad"}
+                             title={"사원 번호"}
+                             />
+            <CustomTextInput value={pw}
+                             onchangeText={text => setPw(text)}
+                             title={"비밀 번호"}
             />
-            </View>
-
-            <View style={styles.inputView}>
-            <Text style={styles.text}>비밀 번호</Text>
-            <TextInput
-                onChangeText={text => {setPw(text)}}
-                placeholder={"비밀 번호"}
-                secureTextEntry={true}
-                style={styles.textInput}
+            <CustomTextInput value={name}
+                             onchangeText={text => setName(text)}
+                             title={"이름"}
             />
-            </View>
-
-            <View style={styles.inputView}>
-            <Text style={styles.text}>이름</Text>
-            <TextInput
-                onChangeText={text => {setName(text)}}
-                placeholder={"이름"}
-                style={styles.textInput}
+            <CustomTextInput value={SSN}
+                             onchangeText={text => setSSN(text)}
+                             title={"주민 번호"}
             />
-            </View>
-
-            <View style={styles.inputView}>
-            <Text style={styles.text}>주민 번호</Text>
-            <TextInput
-                onChangeText={text => {setSSN(text)}}
-                placeholder={"주민 번호"}
-                textContentType={"telephoneNumber"}
-                keyboardType={"number-pad"}
-                style={styles.textInput}
+            <CustomTextInput value={email}
+                             onchangeText={text => setEmail(text)}
+                             title={"이메일"}
             />
-            </View>
-
-            <View style={styles.inputView}>
-            <Text style={styles.text}>이메일</Text>
-            <TextInput
-                onChangeText={text => {setEmail(text)}}
-                placeholder={"이메일"}
-                keyboardType={"email-address"}
-                style={styles.textInput}
+            <CustomTextInput value={phoneNum}
+                             onchangeText={text => setPhoneNum(text)}
+                             keyboardType={"number-pad"}
+                             title={"전화 번호"}
             />
-            </View>
-
-            <View style={styles.inputView}>
-            <Text style={styles.text}>전화 번호</Text>
-            <TextInput
-                onChangeText={text => {setPhoneNum(text)}}
-                placeholder={"전화 번호"}
-                keyboardType="number-pad"
-                style={styles.textInput}
-            />
-            </View>
 
             <DropDownPicker
                 items={genderItem}
@@ -191,11 +157,10 @@ const Join = ({navigation}) => {
                 containerStyle={styles.genderSelect}
                 style={styles.genderSelect}
                 dropDownStyle={{backgroundColor: '#fafafa'}}
-                />
+            />
 
 
-            <CustomButton text={"회원가입"} func={join} />
-
+            <CustomButton text={"회원가입"} func={join}/>
         </SafeAreaView>
     );
 }
@@ -223,22 +188,6 @@ const styles = StyleSheet.create({
         zIndex: 3,
     },
 
-    inputView: {
-        flexDirection:"row",
-        justifyContent: "space-between",
-        marginBottom: 20,
-
-    },
-    text: {
-        fontSize: 25,
-        marginRight: 20,
-    },
-    textInput: {
-        fontSize: 25,
-        width: 250,
-        borderWidth: 0.3,
-        borderColor: "gray"
-    },
 
 });
 

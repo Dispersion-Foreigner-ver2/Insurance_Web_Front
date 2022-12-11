@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {
+    Alert,
     FlatList,
     Image,
     SafeAreaView,
@@ -36,10 +37,15 @@ const ContractManage = ({navigation}) => {
     function getInsuranceList() {
         axios.get("http://localhost:8080/contract")
             .then(function (resp) {
-                setInsurances([]);
-                for (let i = 0; i < resp.data.result.length; i++) {
-                    setInsurances(insurances => [...insurances, resp.data.result[i]]);
+                if (resp.data.code === 200) {
+                    setInsurances([]);
+                    for (let i = 0; i < resp.data.result.length; i++) {
+                        setInsurances(insurances => [...insurances, resp.data.result[i]]);
+                    }
+                } else {
+                    Alert.alert("계약 조회 오류", resp.data.message)
                 }
+
             }).catch(function (reason) {
             alert("네트워크 오류 발생");
         });
@@ -48,10 +54,15 @@ const ContractManage = ({navigation}) => {
     function getContractList() {
         axios.get("http://localhost:8080/contract/all")
             .then(function (resp) {
-                setContracts([]);
-                for (let i = 0; i < resp.data.result.length; i++) {
-                    setContracts(contracts => [...contracts, resp.data.result[i]]);
+                if (resp.data.code === 200) {
+                    setContracts([]);
+                    for (let i = 0; i < resp.data.result.length; i++) {
+                        setContracts(contracts => [...contracts, resp.data.result[i]]);
+                    }
+                } else {
+                    Alert.alert("보험 조회 오류", resp.data.message)
                 }
+
             }).catch(function (reason) {
             alert("네트워크 오류 발생");
         });
@@ -61,8 +72,8 @@ const ContractManage = ({navigation}) => {
         axios.get("http://localhost:8080/contract/search/all", {
             params: {customerId: customerId}
         }).then(function (resp) {
-            if (resp.data.result[0].message != null) {
-                alert(resp.data.result[0].message)
+            if (resp.data.code !== 200) {
+                Alert.alert("계약 검색 오류",resp.data.message)
                 setCustomerId(null);
             } else {
                 setContracts([]);
@@ -90,8 +101,12 @@ const ContractManage = ({navigation}) => {
         axios.delete("http://localhost:8080/contract/terminate", {
             params: {contractId: contractId}
         }).then(function (resp) {
-            alert(`${resp.data.result.localDate}, ${resp.data.result.message}`)
-            getContractList()
+            if (resp.data.code === 200) {
+                alert(`${resp.data.result.localDate}, ${resp.data.result.message}`);
+                getContractList();
+            } else {
+                Alert.alert("계약 해제 오류", resp.data.message)
+            }
         }).catch(function (reason) {
             alert("오류 발생")
         });

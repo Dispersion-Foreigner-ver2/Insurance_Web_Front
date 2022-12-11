@@ -7,7 +7,7 @@ const CustomButton = ({func, text}) => {
     return (
 
         <TouchableOpacity style={styles.button} onPressOut={func}>
-            <Text>{text}</Text>
+            <Text style={styles.buttonText}>{text}</Text>
         </TouchableOpacity>
     );
 };
@@ -25,6 +25,12 @@ const styles = StyleSheet.create({
         margin: 10,
         alignSelf: "center"
     },
+    buttonText: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold",
+    },
+
 });
 
 export default CustomButton;
