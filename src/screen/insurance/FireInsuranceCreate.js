@@ -65,7 +65,7 @@ const FireInsuranceCreate = ({navigation, route}) => {
                     setBuildingDamage("");
                 }
             }).catch(function (err) {
-            console.log(`Error message : ${err}`)
+            alert("네트워크 오류 발생");
         });
     }
 

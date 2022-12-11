@@ -1,5 +1,5 @@
 import React from "react";
-import {Image, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
+import {Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 import CustomUnderwriteList from "../../component/CustomUnderwriteList";
 
 
@@ -16,6 +16,25 @@ const UnderwriteManage = () => {
         {id : 8, insuranceName: "보험 이름", customerName: "고객 이름", underwrite: true},
         {id : 9, insuranceName: "보험 이름", customerName: "고객 이름", underwrite: false},
     ]
+
+    function checkUnderwrite(contractId) {
+        Alert.alert("인수 심사",
+            "인수 심사가 아직 진행되지 않았습니다. 인수 시마를 진행하시겠습니까?",
+            [
+                {
+                    text: "예",
+                    onPress: () => underwrite(contractId)
+                },
+                {
+                    text: "아니요"
+                }
+            ]
+            )
+    }
+
+    function underwrite(contractId) {
+        //인수심사 진행 - back
+    }
 
 
 

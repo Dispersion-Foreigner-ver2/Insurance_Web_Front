@@ -1,14 +1,23 @@
 import React from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import {
-    CarInsuranceCreate, CustomerInquiry, CustomerManage,
+    CarInsuranceCreate,
+    ContractManage,
+    ContractSelect,
+    CustomerCarJoin,
+    CustomerHouseJoin,
+    CustomerInquiry,
+    CustomerJoin,
+    CustomerManage, CustomerSelect, CustomerShipJoin,
     FireInsuranceCreate,
     Home,
     InsuranceInquiry,
-    InsuranceManage, SeaInsuranceCreate,
+    InsuranceManage,
+    SeaInsuranceCreate,
     StaffInformation,
     StaffManage,
-    StaffPayManage, UnderwriteManage
+    StaffPayManage,
+    UnderwriteManage
 } from "../screen";
 
 
@@ -34,6 +43,14 @@ const MainNavigation = () => {
 
             <MainStack.Screen name="CustomerManage" component={CustomerManage}/>
             <MainStack.Screen name="CustomerInquiry" component={CustomerInquiry}/>
+            <MainStack.Screen name="CustomerSelect" component={CustomerSelect}/>
+            <MainStack.Screen name="CustomerJoin" component={CustomerJoin}/>
+            <MainStack.Screen name="CustomerCarJoin" component={CustomerCarJoin}/>
+            <MainStack.Screen name="CustomerHouseJoin" component={CustomerHouseJoin}/>
+            <MainStack.Screen name="CustomerShipJoin" component={CustomerShipJoin}/>
+
+            <MainStack.Screen name="ContractManage" component={ContractManage}/>
+            <MainStack.Screen name="ContractSelect" component={ContractSelect}/>
         </MainStack.Navigator>
     );
 };

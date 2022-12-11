@@ -15,8 +15,17 @@ import CompensationManage from "./compensation/CompensationManage";
 import CompensationJudge from "./compensation/CompensationJudge";
 import CustomerManage from "./customer/CustomerManage";
 import CustomerInquiry from "./customer/CustomerInquiry";
+import ContractManage from "./contarct/ContractManage";
+import ContractSelect from "./contarct/ContractSelect";
+import CustomerSelect from "./customer/CustomerSelect";
+import CustomerShipJoin from "./customer/CustomerShipJoin";
+import CustomerHouseJoin from "./customer/CustomerHouseJoin";
+import CustomerCarJoin from "./customer/CustomerCarJoin";
+
 
 export {Login,Join, CustomerJoin, Home, StaffManage, SeaInsuranceCreate,
     FireInsuranceCreate, InsuranceInquiry, InsuranceManage, CarInsuranceCreate,
     StaffInformation, StaffPayManage, UnderwriteManage, CompensationManage,
-    CompensationJudge, CustomerManage, CustomerInquiry}
+    CompensationJudge, CustomerManage, CustomerInquiry, ContractManage, ContractSelect,
+    CustomerSelect, CustomerShipJoin, CustomerHouseJoin, CustomerCarJoin
+}

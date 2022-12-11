@@ -23,7 +23,7 @@ const StaffPayManage = ({route}) => {
 
 
     function selectPosition() {
-        console.log("!@312")
+
         switch (staffPaid.position) {
             case "평사원":
                 Alert.alert(
@@ -236,7 +236,7 @@ const StaffPayManage = ({route}) => {
                         setStaffPaid(resp.data.result)
                     })
         }).catch(function (reason) {
-            alert(reason)
+            alert("네트워크 오류 발생");
         });
     }
 

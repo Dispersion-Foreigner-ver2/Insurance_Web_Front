@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {SafeAreaView, StyleSheet, Text, View} from "react-native";
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 import CustomMainButton from "../component/CustomMainButton";
 import {StaffContext} from "../context/Staff";
 
@@ -26,7 +26,7 @@ const Home = ({navigation}) => {
     }
 
     function moveContract() {
-
+        navigation.navigate("ContractManage");
     }
 
     function logout(){
@@ -42,40 +42,40 @@ const Home = ({navigation}) => {
 
             {
                 staff.department === "보험 설계부" ? (
-                    <View style={styles.buttonView}>
+                    <ScrollView style={styles.buttonView}>
                         <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                         <CustomMainButton buttonText="보험 관리" func={moveInsurance} />
                         <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
-                    </View>
+                    </ScrollView>
 
                 ) : (
                     staff.department === "인수 심사부" ? (
-                        <View style={styles.buttonView}>
+                        <ScrollView style={styles.buttonView}>
                             <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                             <CustomMainButton buttonText={"인수 심사 관리"}/>
                             <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
-                        </View>
+                        </ScrollView>
                     ) : (
                         staff.department === "영업 관리부" ? (
-                            <View style={styles.buttonView}>
+                            <ScrollView style={styles.buttonView}>
                                 <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                                 <CustomMainButton buttonText={"고객 관리"} func={moveCustomer}/>
                                 <CustomMainButton buttonText={"보험 계약 관리"} func={moveContract}/>
                                 <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
-                            </View>
+                            </ScrollView>
                         ) : (
                             staff.department === "인사 관리부" ? (
-                                <View style={styles.buttonView}>
+                                <ScrollView style={styles.buttonView}>
                                     <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                                     <CustomMainButton buttonText={"인사 관리"} func={moveStaff}/>
                                     <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
-                                </View>
+                                </ScrollView>
                             ) : (
-                                <View style={styles.buttonView}>
+                                <ScrollView style={styles.buttonView}>
                                     <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
                                     <CustomMainButton buttonText={"보상 운영"}/>
                                     <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
-                                </View>
+                                </ScrollView>
                             )
                         )
                     )

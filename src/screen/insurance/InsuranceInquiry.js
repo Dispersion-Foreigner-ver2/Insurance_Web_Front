@@ -102,7 +102,7 @@ const InsuranceInquiry = ({navigation, route}) => {
                 );
                 refresh();
             }).catch(function (reason) {
-                alert(reason)
+            alert("네트워크 오류 발생");
         });
     }
 
@@ -130,7 +130,7 @@ const InsuranceInquiry = ({navigation, route}) => {
             alert(resp.data.result.message);
             refresh();
         }).catch(function (reason) {
-            alert(reason.message);
+            alert("네트워크 오류 발생");
         });
     }
 

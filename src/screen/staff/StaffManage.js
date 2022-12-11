@@ -181,11 +181,10 @@ const StaffManage = ({navigation}) => {
                     for (let i = 0; i < resp.data.result.length; i++) {
                         setStaffs( staffs =>[...staffs, resp.data.result[i]]);
                     }
-                    console.log(staffs)
                 })
 
         }).catch(function (reason) {
-            alert("네트워크 오류");
+            alert("네트워크 오류 발생");
         });
 
 
@@ -208,7 +207,7 @@ const StaffManage = ({navigation}) => {
                     }
                 })
         }).catch(function (reason) {
-            alert("네트워크 오류");
+            alert("네트워크 오류 발생");
         });
     }
 

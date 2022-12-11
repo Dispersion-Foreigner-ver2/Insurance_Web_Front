@@ -27,22 +27,23 @@ const Login = ({navigation}) => {
                 null,
                 {params: {staffId: id, password: pw}})
                 .then(function (resp) {
+                    console.log(resp.data)
+
                     if (resp.data.result.message === null) {
-                        alert("로그인 성공");
                         const staffId = resp.data.result.staffId;
                         const staffName = resp.data.result.staffName;
                         const department = resp.data.result.department;
 
                         dispatch({staffId, staffName, department})
 
-                        console.log(staff)
+
                     } else {
-                        console.log(resp.data.result);
+                        alert(" 오류 발생");
                         setId("");
                         setPw("");
                     }
                 }).catch(function (e){
-                    console.log(e)
+                    alert("네트워크 연결을 확인해주세요.")
             })
             ;
         }
