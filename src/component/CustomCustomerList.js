@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from "react-native";
 import CustomIconButton from "./CustomIconButton";
 
 
-const CustomCustomerList = ({customer, editFunc, removeFunc}) => {
+const CustomCustomerList = ({customer, editFunc, removeFunc, paid}) => {
 
     return (
         customer.paid ? (
@@ -35,10 +35,16 @@ const CustomCustomerList = ({customer, editFunc, removeFunc}) => {
                     <Text style={styles.expText}>{customer.phoneNum}</Text>
                     <Text style={styles.expText}>{customer.email}</Text>
                 </View>
-                <View style={styles.buttonView}>
-                    <CustomIconButton source={require("../../assets/icons/edit.png")} func={editFunc}/>
-                    <CustomIconButton source={require("../../assets/icons/remove_person.png")} func={removeFunc}/>
-                </View>
+                {paid === true ? (
+                    null
+                ) : (
+                    <View style={styles.buttonView}>
+                        <CustomIconButton source={require("../../assets/icons/edit.png")} func={editFunc}/>
+                        <CustomIconButton source={require("../../assets/icons/remove_person.png")} func={removeFunc}/>
+                    </View>
+                )}
+
+
             </View>
         )
 

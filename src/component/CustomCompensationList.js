@@ -1,22 +1,34 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, Text, View} from "react-native";
 import CustomIconButton from "./CustomIconButton";
 
-const CustomCompensationList = ({contract}) => {
+const CustomCompensationList = ({contractId, insuranceId, insuranceName, type, func}) => {
 
     //게약 ID | 보험 종류(img) | 보험 이름 | 고객 이름 | 보상하기 버튼
 
     return (
         <View style={styles.container}>
             <View style={styles.idTextView}>
-                <Text style={styles.idText}>{contract.id}</Text>
+                <Text style={styles.idText}>{contractId}</Text>
+            </View>
+            <View style={styles.typeImageView}>
+                {type === "C" ?
+                    (<Image source={require("../../assets/icons/car.png")} style={styles.typeImage}/>)
+                    : (type === "F" ? (
+                        <Image source={require("../../assets/icons/fire.png")} style={styles.typeImage}/>
+                    ) : (
+                        type === "S" ? (
+                            <Image source={require("../../assets/icons/ship.png")} style={styles.typeImage}/>
+                        ) : (
+                            null
+                        )))}
             </View>
             <View style={styles.nameExpTextView}>
-                <Text style={styles.nameText}>{contract.insuranceName}</Text>
-                <Text style={styles.expText}>{contract.customerName}</Text>
+                <Text style={styles.nameText}>{insuranceId}</Text>
+                <Text style={styles.expText}>{insuranceName}</Text>
             </View>
             <View style={styles.buttonView}>
-                <CustomIconButton source={require("../../assets/icons/paid.png")}/>
+                <CustomIconButton func={func} source={require("../../assets/icons/paid.png")}/>
             </View>
         </View>
     );
@@ -45,6 +57,16 @@ const styles = StyleSheet.create({
     idText: {
         fontSize: 30,
         fontWeight: "bold",
+    },
+    typeImageView: {
+        padding: 10,
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    typeImage: {
+        width: 30,
+        height: 30,
     },
     nameExpTextView: {
         padding: 10,

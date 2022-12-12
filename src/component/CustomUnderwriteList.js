@@ -6,24 +6,24 @@ import CustomIconButton from "./CustomIconButton";
 const CustomUnderwriteList = ({contract, underwrite}) => {
 
     return (
-        contract.underwrite === true ? (
+        contract.underWrite === true ? (
             <View style={styles.trueContainer}>
                 <View style={styles.trueIdTextView}>
-                    <Text style={styles.trueIdText}>{contract.id}</Text>
+                    <Text style={styles.trueIdText}>{contract.contractId}</Text>
                 </View>
                 <View style={styles.trueNameExpTextView}>
-                    <Text style={styles.trueNameText}>{contract.insuranceName}</Text>
-                    <Text style={styles.trueExpText}>{contract.customerName}</Text>
+                    <Text style={styles.trueNameText}>{contract.insuranceId}</Text>
+                    <Text style={styles.trueExpText}>{contract.insuranceName}</Text>
                 </View>
             </View>
         ) : (
             <View style={styles.container}>
                 <View style={styles.idTextView}>
-                    <Text style={styles.idText}>{contract.id}</Text>
+                    <Text style={styles.idText}>{contract.contractId}</Text>
                 </View>
                 <View style={styles.nameExpTextView}>
-                    <Text style={styles.nameText}>{contract.insuranceName}</Text>
-                    <Text style={styles.expText}>{contract.customerName}</Text>
+                    <Text style={styles.nameText}>{contract.insuranceId}</Text>
+                    <Text style={styles.expText}>{contract.insuranceName}</Text>
                 </View>
                 <View style={styles.buttonView}>
                     <CustomIconButton func={underwrite} source={require("../../assets/icons/underwrite.png")}/>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         padding: 10,
         height: "100%",
         justifyContent: "center",
-        marginRight: 20,
+        width: 120,
     },
     nameText: {
         fontSize: 25,

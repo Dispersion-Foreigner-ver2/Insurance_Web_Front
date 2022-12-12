@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
     listView:{
-        height: "12.5%",
+        height: "50%",
         marginTop: 10,
         marginBottom: 30,
     },
@@ -221,7 +221,8 @@ const styles = StyleSheet.create({
     },
 
     informationView: {
-        height: " 69.5%",
+        height: "80%",
+        top: 10
     },
 
     inputContainer: {
@@ -261,7 +262,7 @@ const styles = StyleSheet.create({
 
     contractListView: {
         backgroundColor: "white",
-        height: "70%"
+        height: "60%"
     },
 
     contractList: {
@@ -272,7 +273,7 @@ const styles = StyleSheet.create({
 
     contractButtonContainer: {
         backgroundColor: "white",
-        height: "4%",
+        height: "45%",
         alignItems: "center",
         zIndex: 50,
         borderTopWidth: 0.2,

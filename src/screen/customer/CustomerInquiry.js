@@ -17,8 +17,14 @@ const CustomerInquiry = ({navigation}) => {
         {id: 9, name : "차유상", ssn: "123123-123123", address:"인천시 남동구 서창남순환로 82 104-1301", phoneNum: "010-1234-1234", email: "yoo7969@naver.com", paid: false},
     ]
 
+    function movePay() {
+        navigation.navigate("CustomerPayManage");
+    }
+
     function edit() {
-        const name = Alert.prompt("이름을 입력해주세요", "이름을 입력해주세요");
+        const address = Alert.prompt("수정", "수정 하실 주소를 입력해주세요.");
+        const phoneNum = Alert.prompt("수정", "수정 하실 핸드폰 번호를 입력해주세요.");
+        const email = Alert.prompt("수정", "수정 하실 이메일을 입력해주세요.");
     }
 
     function remove() {
@@ -35,7 +41,7 @@ const CustomerInquiry = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.buttonView}>
-                <TouchableOpacity >
+                <TouchableOpacity onPressOut={ movePay}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>보험료 납입 받기</Text>
                     </View>

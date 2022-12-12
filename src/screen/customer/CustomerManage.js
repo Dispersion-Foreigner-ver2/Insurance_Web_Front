@@ -1,13 +1,31 @@
-import React, {useState} from "react";
-import {SafeAreaView, StyleSheet, Text, View} from "react-native";
+import React, {useEffect, useState} from "react";
+import {Alert, SafeAreaView, StyleSheet, Text, View} from "react-native";
 import CustomMainButton from "../../component/CustomMainButton";
+import axios from "axios";
 
 
 const CustomerManage = ({navigation}) => {
 
+    useEffect(() => {
+        getCustomerCount();
+    }, []);
+
     const [totalCount, setTotalCount] = useState(0);
     const [thisMonthCustomerCount, setThisMonthCustomerCount] = useState(0);
     const [unpaidCustomerCount, setUnpaidCustomerCount] = useState(0);
+
+    function getCustomerCount(){
+        axios.get("http://localhost:8080/customer/manage")
+            .then(function (resp){
+                if (resp.data.code === 200) {
+                    setTotalCount(resp.data.result.totalCustomerCount);
+                    setThisMonthCustomerCount(resp.data.result.thisMonthCustomerCount);
+                    setUnpaidCustomerCount(resp.data.result.thisMonthNotPayCustomerCount);
+                } else {
+                    Alert.alert("고객 현황 불러오기 오류", resp.data.message);
+                }
+            })
+    }
 
 
     return (

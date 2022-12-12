@@ -1,17 +1,48 @@
 import React, {useState} from "react";
-import {SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
 import CustomButton from "../../component/CustomButton";
 import CustomTextInput from "../../component/CustomTextInput";
+import axios from "axios";
 
 
-const CustomerCarJoin = () => {
+const CustomerCarJoin = ({navigation, route}) => {
     const [carNum, setCarNum] = useState("");
     const [carYear, setCarYear] = useState("");
     const [carDisplacement, setCarDisplacement] = useState("");
     const [carPrice, setCarPrice] = useState("");
 
     function carJoin() {
-
+        axios.post("http://localhost:8080/contract/conclusion/car",
+            null, {
+                params: {
+                    insuranceId: route.params.insuranceId,
+                    name: route.params.name,
+                    age: route.params.age,
+                    ssn: route.params.ssn,
+                    email: route.params.email,
+                    job: route.params.job,
+                    phoneNum: route.params.phoneNum,
+                    address: route.params.address,
+                    account: route.params.account,
+                    customerSex: route.params.customerSex,
+                    diseaseNum: route.params.diseaseNum,
+                    historyYear: route.params.historyYear,
+                    cureComplete: route.params.cureComplete,
+                    carNum: carNum,
+                    displacement: carDisplacement,
+                    price: carPrice,
+                    year: carYear
+                }
+            }).then(function (resp) {
+            if (resp.data.code === 200) {
+                Alert.alert("계약 작성 완료", resp.data.result.message);
+                navigation.navigate("ContractManage")
+            } else {
+                Alert.alert("계약 작성 실패", resp.data.message);
+            }
+        }).catch(function (reason) {
+            Alert.alert("네트워크 오류", "네트워크 연결을 확인하세요.")
+        });
     }
 
     return (

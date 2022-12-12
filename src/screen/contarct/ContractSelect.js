@@ -13,7 +13,7 @@ const ContractSelect = ({navigation}) => {
     const [insuranceId, setInsuranceId] = useState(null);
 
     useEffect(() => {
-
+        getInsuranceList();
     }, []);
 
     function getInsuranceList() {
@@ -65,12 +65,11 @@ const ContractSelect = ({navigation}) => {
     }
 
     function checkCustomer() {
-        navigation.navigate("CustomerJoin", {type : insurances[insuranceId].insuranceType})
+
     }
 
     function createCustomer() {
-
-        navigation.navigate("CustomerJoin", {type : insurances[insuranceId].insuranceType})
+        navigation.navigate("CustomerJoin", {insuranceId: insurances[insuranceId].insurance.id, type : insurances[insuranceId].insuranceType})
     }
 
 

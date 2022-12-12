@@ -29,6 +29,10 @@ const Home = ({navigation}) => {
         navigation.navigate("CompensationManage")
     }
 
+    function moveUnderwrtie() {
+        navigation.navigate("UnderwriteManage");
+    }
+
     function logout(){
         dispatch("", "", "");
     }
@@ -52,7 +56,7 @@ const Home = ({navigation}) => {
                     staff.department === "인수 심사부" ? (
                         <ScrollView style={styles.buttonView}>
                             <Text style={styles.doText}>저와 함께 일을 시작해볼까요?</Text>
-                            <CustomMainButton buttonText={"인수 심사 관리"}/>
+                            <CustomMainButton buttonText={"인수 심사 관리"} func={moveUnderwrtie}/>
                             <CustomMainButton buttonText={"로그 아웃"} func={logout}/>
                         </ScrollView>
                     ) : (

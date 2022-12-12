@@ -1,17 +1,16 @@
 import React, {useState} from "react";
-import {SafeAreaView, StyleSheet} from "react-native";
+import {Alert, SafeAreaView, StyleSheet} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import CustomTextInput from "../../component/CustomTextInput";
 import CustomButton from "../../component/CustomButton";
-import CustomerHouseJoin from "./CustomerHouseJoin";
+import axios from "axios";
 
 
-const CustomerShipJoin = () => {
+const CustomerShipJoin = ({navigation, route}) => {
     const [shipTypeValue, setShipTypeValue] = useState(0);
     const [shipTypeIem, setHouseTypeItem] = useState([
         {label: '일반', value: 1},
         {label: '화물선', value: 2},
-        {label: '오피스텔', value: 3},
     ]);
     const [shipTypeOpen, setShipTypeOpen] = useState(false);
 
@@ -21,7 +20,37 @@ const CustomerShipJoin = () => {
     const [shipPrice, setShipPrice] = useState("");
 
     function shipJoin() {
-
+        axios.post("http://localhost:8080/contract/conclusion/sea",
+            null, {
+                params: {
+                    insuranceId: route.params.insuranceId,
+                    name: route.params.name,
+                    age: route.params.age,
+                    ssn: route.params.ssn,
+                    email: route.params.email,
+                    job: route.params.job,
+                    phoneNum: route.params.phoneNum,
+                    address: route.params.address,
+                    account: route.params.account,
+                    customerSex: route.params.customerSex,
+                    diseaseNum: route.params.diseaseNum,
+                    historyYear: route.params.historyYear,
+                    cureComplete: route.params.cureComplete,
+                    shipType: shipTypeValue,
+                    shipNum: shipNum,
+                    price: shipPrice,
+                    year: shipYear
+                }
+            }).then(function (resp) {
+            if (resp.data.code === 200) {
+                Alert.alert("계약 작성 완료", resp.data.result.message);
+                navigation.navigate("ContractManage")
+            } else {
+                Alert.alert("계약 작성 실패", resp.data.message);
+            }
+        }).catch(function (reason) {
+            Alert.alert("네트워크 오류", "네트워크 연결을 확인하세요.")
+        });
     }
 
     return (

@@ -23,6 +23,7 @@ import CustomerHouseJoin from "./customer/CustomerHouseJoin";
 import CustomerCarJoin from "./customer/CustomerCarJoin";
 import CompensationCalculate from "./compensation/CompensationCalculate";
 import StartPage from "./auth/StartPage";
+import CustomerPayManage from "./customer/CustomerPayManage";
 
 
 
@@ -30,5 +31,6 @@ export {Login,Join, CustomerJoin, Home, StaffManage, SeaInsuranceCreate,
     FireInsuranceCreate, InsuranceInquiry, InsuranceManage, CarInsuranceCreate,
     StaffInformation, StaffPayManage, UnderwriteManage, CompensationManage,
     CompensationJudge, CustomerManage, CustomerInquiry, ContractManage, ContractSelect,
-    CustomerSelect, CustomerShipJoin, CustomerHouseJoin, CustomerCarJoin, StartPage, CompensationCalculate
+    CustomerSelect, CustomerShipJoin, CustomerHouseJoin, CustomerCarJoin, StartPage,
+    CompensationCalculate, CustomerPayManage
 }

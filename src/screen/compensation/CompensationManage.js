@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import CustomContractList from "../../component/CustomContractList";
+import axios from "axios";
+import CustomCompensationList from "../../component/CustomCompensationList";
+import safeAreaView from "react-native/Libraries/Components/SafeAreaView/SafeAreaView";
 
 
 const CompensationManage = () => {
@@ -9,18 +12,77 @@ const CompensationManage = () => {
     //계약 받아 올 때 보험 종류도 같이 받아오기 -> 보험 종류로 면부책 판단하는 것이 달라짐
     //주의) 인수 심사 받은 보험만 표시
 
-    const [searchContent, setSearchContent] = useState();
+    const [customerId, setCustomerId] = useState();
 
     const [contracts, setContracts] = useState([]);
 
+    const [insuranceType, setInsuranceType] = useState([]);
+
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        //계약 전체 리스트 받아오기
+        getContractList();
     }, []);
 
+    useEffect(() => {
+        if (customerId === "") {
+            getContractList()
+        }
+    },[customerId]);
+
+
+    function getContractList() {
+        axios.get("http://localhost:8080/contract/all")
+            .then(function (resp){
+                if (resp.data.code === 200) {
+                    setContracts([]);
+                    for (let i = 0; i < resp.data.result.length; i++) {
+                        setContracts(contracts => [...contracts,{
+                            contractId: resp.data.result[i].contractId,
+                            insuranceId: resp.data.result[i].insurance.id,
+                            insuranceName: resp.data.result[i].insurance.name,
+                        }]);
+                    }
+                    getInsuranceType();
+                } else {
+                    Alert.alert("계약 조회 오류", resp.data.message)
+                }
+            })
+
+    }
+
+    function getInsuranceType() {
+        setInsuranceType([]);
+        for (let i = 0; i < contracts.length; i++) {
+            axios.get("http://localhost:8080/insurance",{
+                    params :{id : contracts[i].insuranceId}
+                })
+                .then(function (resp) {
+                    if (resp.data.code === 200) {
+                        setInsuranceType(insuranceType => [...insuranceType, resp.data.result.insuranceType]);
+                    } else {
+                        Alert.alert("보험 종류 조회 오류", resp.data.message)
+                    }
+                }).catch(function (reason) {
+                    Alert.alert("네트워크 오류", "네트워크를 확인해 주세요.")
+            });
+        }
+        setLoading(false)
+    }
 
 
     function search() {
-
+        axios.get("http://localhost:8080/compensation/manage",{
+            params: {customerId : customerId}
+        })
+            .then(function (resp){
+                if (resp.data.code === 200) {
+                    setContracts([]);
+                    for (let i = 0; i < resp.data.result.length; i++) {
+                        setContracts(contracts => [...contracts, resp.data.result[i]]);
+                    }
+                }
+            })
     }
 
     return(
@@ -33,8 +95,10 @@ const CompensationManage = () => {
                     </View>
                     <TextInput keyboardType={"number-pad"}
                                style={styles.textInput}
+                               value={customerId}
+                               onChangeText={text => setCustomerId(text)}
                     />
-                    <TouchableOpacity >
+                    <TouchableOpacity onPressOut={search}>
                         <View style={styles.searchButtonView}>
                             <Text>검색</Text>
                         </View>
@@ -42,14 +106,20 @@ const CompensationManage = () => {
                 </View>
 
                 <ScrollView style={styles.contractListView}>
+
+                    {
+                        loading===true ? (null) : (
+                            contracts.map((contract, index) =>
+                                <CustomCompensationList key={contract.contractId}
+                                                        contractId={contract.contractId}
+                                                        insuranceId={contract.insuranceId}
+                                                        insuranceName={contract.insuranceName}
+                                                        type={insuranceType[index]}
+                                />
+                        )
+
+                    )}
                 </ScrollView>
-                <View style={styles.contractButtonContainer}>
-                    <TouchableOpacity >
-                        <View style={styles.contractButtonView}>
-                            <Text style={styles.contractButtonText}>계약 하기</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
             </View>
         </SafeAreaView>
 );
@@ -63,7 +133,7 @@ const styles = StyleSheet.create({
 
 
     informationView: {
-        height: " 69.5%",
+        height: " 100%",
     },
 
     inputContainer: {
@@ -114,7 +184,7 @@ const styles = StyleSheet.create({
 
     contractButtonContainer: {
         backgroundColor: "white",
-        height: "4%",
+        height: "10%",
         alignItems: "center",
         zIndex: 50,
         borderTopWidth: 0.2,

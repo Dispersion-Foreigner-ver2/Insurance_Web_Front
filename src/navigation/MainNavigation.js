@@ -8,7 +8,7 @@ import {
     CustomerHouseJoin,
     CustomerInquiry,
     CustomerJoin,
-    CustomerManage,
+    CustomerManage, CustomerPayManage,
     CustomerSelect,
     CustomerShipJoin,
     FireInsuranceCreate,
@@ -108,6 +108,14 @@ const MainNavigation = () => {
             />
             <MainStack.Screen name="CustomerInquiry"
                               component={CustomerInquiry}
+                              options={{
+                                  headerTitle: "",
+                                  headerBackTitle: '뒤로가기'
+                              }}
+            />
+
+            <MainStack.Screen name="CustomerPayManage"
+                              component={CustomerPayManage}
                               options={{
                                   headerTitle: "",
                                   headerBackTitle: '뒤로가기'

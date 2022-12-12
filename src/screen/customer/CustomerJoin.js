@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Alert, SafeAreaView, StyleSheet, Text, TextInput, View} from "react-native";
 import CustomButton from "../../component/CustomButton";
 import axios from "axios";
@@ -8,7 +8,8 @@ import {RadioButton} from "react-native-radio-buttons-group";
 const CustomerJoin = ({navigation, route}) => {
 
 
-    const [id, setId] = useState("");
+
+    const [age, setAge] = useState("")
     const [name, setName] = useState("");
     const [SSN, setSSN] = useState("");
     const [email, setEmail] = useState("");
@@ -35,6 +36,17 @@ const CustomerJoin = ({navigation, route}) => {
     ])
     const [diseaseOpen, setDiseaseOpen] = useState(false);
 
+
+    const [jobValue, setJobValue] = useState(0);
+    const [jobItem, setJobItem] = useState([
+        {label: '영업직', value: 1},
+        {label: '생산직', value: 2},
+        {label: '사무직', value: 3},
+        {label: '자영업자', value: 4},
+        {label: '무직', value: 5},
+    ])
+    const [jobOpen, setJobOpen] = useState(false);
+
     const cureCompletes = [
         {id: 0, label: "무"},
         {id: 1, label: "유"}
@@ -54,57 +66,63 @@ const CustomerJoin = ({navigation, route}) => {
 
 
     function join() {
-        axios.post("http://localhost:8080/customer/join",
-            null,
-            {
-                params: {
-                    customerId: id,
-                    customerName: name,
-                    customerSsn: SSN,
-                    customerEmail: email,
-                    customerPhoneNum: phoneNum,
-                    customerAddress: address,
-                    customerAccount: account,
-                    customerSex: genderValue,
-                    diseaseNum:diseaseValue,
-                    historyYear: historyYear,
-                    cureComplete: index
-                }
-            })
-            .then(function (resp) {
-                if (resp.data.code === 200) {
-                    alert(resp.data.result.message);
-                    if (route.params.type === "C") {
-                        navigation.navigate("CustomerCarJoin");
-                    } else if (route.params.type === "F") {
-                        navigation.navigate("CustomerHouseJoin");
-                    } else {
-                        navigation.navigate("CustomerShipJoin");
-                    }
-                } else {
-                    Alert.alert("고객 생성 오류", resp.data.message)
-                }
-
-            }).catch(function (reason) {
-            alert("네트워크 오류 발생");
-        });
+        console.log(route)
+        if (route.params.type === "C") {
+            navigation.navigate("CustomerCarJoin", {
+                insuranceId: route.params.insuranceId,
+                name: name,
+                age: age,
+                ssn: SSN,
+                email: email,
+                phoneNum: phoneNum,
+                address: address,
+                account: account,
+                customerSex: genderValue,
+                diseaseNum:diseaseValue,
+                historyYear: historyYear,
+                cureComplete: index,
+                job: jobValue
+            });
+        } else if (route.params.type === "F") {
+            navigation.navigate("CustomerHouseJoin", {
+                insuranceId: route.params.insuranceId,
+                name: name,
+                age: age,
+                ssn: SSN,
+                email: email,
+                phoneNum: phoneNum,
+                address: address,
+                account: account,
+                customerSex: genderValue,
+                diseaseNum:diseaseValue,
+                historyYear: historyYear,
+                cureComplete: index,
+                job: jobValue
+            });
+        } else {
+            navigation.navigate("CustomerShipJoin", {
+                insuranceId: route.params.insuranceId,
+                name: name,
+                age: age,
+                ssn: SSN,
+                email: email,
+                phoneNum: phoneNum,
+                address: address,
+                account: account,
+                customerSex: genderValue,
+                diseaseNum:diseaseValue,
+                historyYear: historyYear,
+                cureComplete: index,
+                job: jobValue
+            });
+        }
     }
 
 
     return (
         <SafeAreaView style={styles.container}>
 
-            <View style={styles.inputView}>
-                <Text style={styles.text}>고객 Id</Text>
-                <TextInput
-                    onChangeText={text => {
-                        setId(text)
-                    }}
-                    placeholder={"고객 ID"}
-                    keyboardType="number-pad"
-                    style={styles.textInput}
-                />
-            </View>
+
 
             <View style={styles.inputView}>
                 <Text style={styles.text}>이름</Text>
@@ -166,6 +184,18 @@ const CustomerJoin = ({navigation, route}) => {
             </View>
 
             <View style={styles.inputView}>
+                <Text style={styles.text}>고객 나이</Text>
+                <TextInput
+                    onChangeText={text => {
+                        setAge(text)
+                    }}
+                    placeholder={"고객 나이"}
+                    keyboardType="number-pad"
+                    style={styles.textInput}
+                />
+            </View>
+
+            <View style={styles.inputView}>
                 <Text style={styles.text}>고객 계좌</Text>
                 <TextInput
                     onChangeText={text => {
@@ -186,6 +216,19 @@ const CustomerJoin = ({navigation, route}) => {
                 placeholder={"성별"}
                 containerStyle={styles.genderSelect}
                 style={styles.genderSelect}
+                dropDownStyle={{backgroundColor: '#fafafa'}}
+            />
+
+            <DropDownPicker
+                items={jobItem}
+                setItems={setJobItem}
+                value={jobValue}
+                setValue={setJobValue}
+                open={jobOpen}
+                setOpen={setJobOpen}
+                placeholder={"직업"}
+                containerStyle={styles.jobSelect}
+                style={styles.jobSelect}
                 dropDownStyle={{backgroundColor: '#fafafa'}}
             />
 
@@ -214,8 +257,8 @@ const CustomerJoin = ({navigation, route}) => {
                 open={diseaseOpen}
                 setOpen={setDiseaseOpen}
                 placeholder={"병명"}
-                containerStyle={styles.genderSelect}
-                style={styles.genderSelect}
+                containerStyle={styles.diseaseSelect}
+                style={styles.diseaseSelect}
                 dropDownStyle={{backgroundColor: '#fafafa'}}
             />
 
@@ -263,7 +306,17 @@ const styles = StyleSheet.create({
     genderSelect: {
         backgroundColor: "white",
         marginBottom: 10,
+        zIndex: 4,
+    },
+    jobSelect: {
+        backgroundColor: "white",
+        marginBottom: 10,
         zIndex: 3,
+    },
+    diseaseSelect: {
+        backgroundColor: "white",
+        marginBottom: 10,
+        zIndex: 2,
     },
 
     inputView: {
