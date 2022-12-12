@@ -3,20 +3,20 @@ import {StyleSheet, Text, View} from "react-native";
 import CustomIconButton from "./CustomIconButton";
 
 
-const CustomCustomerList = ({customer, editFunc, removeFunc, paid}) => {
+const CustomCustomerList = ({monthPay,customerId, customerName, ssn, address, phoneNum, email, editFunc, removeFunc, paid}) => {
 
     return (
-        customer.paid ? (
+        monthPay ? (
             <View style={styles.trueContainer}>
                 <View style={styles.trueIdTextView}>
-                    <Text style={styles.trueIdText}>{customer.id}</Text>
+                    <Text style={styles.trueIdText}>{customerId}</Text>
                 </View>
                 <View style={styles.trueNameExpTextView}>
-                    <Text style={styles.trueNameText}>{customer.name}</Text>
-                    <Text style={styles.trueExpText}>{customer.ssn}</Text>
-                    <Text style={styles.trueExpText}>{customer.address}</Text>
-                    <Text style={styles.trueExpText}>{customer.phoneNum}</Text>
-                    <Text style={styles.trueExpText}>{customer.email}</Text>
+                    <Text style={styles.trueNameText}>{customerName}</Text>
+                    <Text style={styles.trueExpText}>{ssn}</Text>
+                    <Text style={styles.trueExpText}>{address}</Text>
+                    <Text style={styles.trueExpText}>{phoneNum}</Text>
+                    <Text style={styles.trueExpText}>{email}</Text>
                 </View>
                 <View style={styles.buttonView}>
                     <CustomIconButton source={require("../../assets/icons/edit.png")} func={editFunc}/>
@@ -26,14 +26,14 @@ const CustomCustomerList = ({customer, editFunc, removeFunc, paid}) => {
         ) : (
             <View style={styles.container}>
                 <View style={styles.idTextView}>
-                    <Text style={styles.idText}>{customer.id}</Text>
+                    <Text style={styles.idText}>{customerId}</Text>
                 </View>
                 <View style={styles.nameExpTextView}>
-                    <Text style={styles.nameText}>{customer.name}</Text>
-                    <Text style={styles.expText}>{customer.ssn}</Text>
-                    <Text style={styles.expText}>{customer.address}</Text>
-                    <Text style={styles.expText}>{customer.phoneNum}</Text>
-                    <Text style={styles.expText}>{customer.email}</Text>
+                    <Text style={styles.nameText}>{customerName}</Text>
+                    <Text style={styles.expText}>{ssn}</Text>
+                    <Text style={styles.expText}>{address}</Text>
+                    <Text style={styles.expText}>{phoneNum}</Text>
+                    <Text style={styles.expText}>{email}</Text>
                 </View>
                 {paid === true ? (
                     null
@@ -67,19 +67,20 @@ const styles = StyleSheet.create({
         padding: 10,
         borderColor: "gray",
         borderRightWidth: 0.3,
-        width: 50,
+        width: 60,
         height: "100%",
         justifyContent: "center",
 
     },
     trueIdText: {
-        fontSize: 30,
+        fontSize: 20,
         color: "#55C272",
         fontWeight: "bold",
     },
     trueNameExpTextView: {
         padding: 10,
         height: "100%",
+        width: 200,
         justifyContent: "center",
     },
     trueNameText: {
@@ -110,18 +111,19 @@ const styles = StyleSheet.create({
         padding: 10,
         borderColor: "gray",
         borderRightWidth: 0.3,
-        width: 50,
+        width: 60,
         height: "100%",
         justifyContent: "center",
 
     },
     idText: {
-        fontSize: 30,
+        fontSize: 20,
         color: "#FF7575",
         fontWeight: "bold",
     },
     nameExpTextView: {
         padding: 10,
+        width: 200,
         height: "100%",
         justifyContent: "center",
     },

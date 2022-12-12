@@ -85,6 +85,10 @@ const CompensationManage = () => {
             })
     }
 
+    function moveJudge(insuranceType) {
+
+    }
+
     return(
         <SafeAreaView style={styles.container}>
             <View style={styles.informationView}>

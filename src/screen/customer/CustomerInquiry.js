@@ -1,21 +1,35 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import CustomInsuranceList from "../../component/CustomInsuranceList";
 import CustomCustomerList from "../../component/CustomCustomerList";
+import axios from "axios";
 
 const CustomerInquiry = ({navigation}) => {
 
-    const customers = [
-        {id: 1, name : "차유상", ssn: "123123-123123", address:"인천시 남동구 서창남순환로 82 104-1301", phoneNum: "010-1234-1234", email: "yoo7969@naver.com", paid: true},
-        {id: 2, name : "차유상", ssn: "123123-123123", address:"인천시 남동구 서창남순환로 82 104-1301", phoneNum: "010-1234-1234", email: "yoo7969@naver.com", paid: true},
-        {id: 3, name : "차유상", ssn: "123123-123123", address:"인천시 남동구 서창남순환로 82 104-1301", phoneNum: "010-1234-1234", email: "yoo7969@naver.com", paid: true},
-        {id: 4, name : "차유상", ssn: "123123-123123", address:"인천시 남동구 서창남순환로 82 104-1301", phoneNum: "010-1234-1234", email: "yoo7969@naver.com", paid: false},
-        {id: 5, name : "차유상", ssn: "123123-123123", address:"인천시 남동구 서창남순환로 82 104-1301", phoneNum: "010-1234-1234", email: "yoo7969@naver.com", paid: true},
-        {id: 6, name : "차유상", ssn: "123123-123123", address:"인천시 남동구 서창남순환로 82 104-1301", phoneNum: "010-1234-1234", email: "yoo7969@naver.com", paid: false},
-        {id: 7, name : "차유상", ssn: "123123-123123", address:"인천시 남동구 서창남순환로 82 104-1301", phoneNum: "010-1234-1234", email: "yoo7969@naver.com", paid: true},
-        {id: 8, name : "차유상", ssn: "123123-123123", address:"인천시 남동구 서창남순환로 82 104-1301", phoneNum: "010-1234-1234", email: "yoo7969@naver.com", paid: false},
-        {id: 9, name : "차유상", ssn: "123123-123123", address:"인천시 남동구 서창남순환로 82 104-1301", phoneNum: "010-1234-1234", email: "yoo7969@naver.com", paid: false},
-    ]
+
+    useEffect(() => {
+        getCustomers();
+    },[]);
+
+    const [customers, setCustomers] = useState([]);
+
+    function getCustomers() {
+        axios.get("http://localhost:8080/customer/detail")
+            .then(function (resp) {
+                console.log(resp.data.result);
+                if (resp.data.code === 200) {
+                    setCustomers([]);
+                    for (let i = 0; i < resp.data.result.length; i++) {
+                        setCustomers(customers => [...customers, resp.data.result[i]])
+                    }
+                    console.log(customers)
+                } else {
+                    Alert.alert("고객 조회 오류", resp.data.message)
+                }
+            }).catch(function (reason) {
+                Alert.alert("네트워크 오류", "네트워크 연결을 확인해 주세요.")
+        });
+    }
 
     function movePay() {
         navigation.navigate("CustomerPayManage");
@@ -50,8 +64,15 @@ const CustomerInquiry = ({navigation}) => {
             </View>
             <ScrollView style={styles.listView}>
                 {customers.map((customer) =>
-                    <CustomCustomerList customer={customer}
-                                        key={customer.id}
+                    <CustomCustomerList customerId={customer.customerId}
+                                        paid={false}
+                                        address={customer.address}
+                                        email={customer.email}
+                                        customerName={customer.customerName}
+                                        monthPay={customer.monthPay}
+                                        ssn={customer.ssn}
+                                        phoneNum={customer.phoneNumber}
+                                        key={customer.customerId}
                                         editFunc={edit}
                                         removeFunc={remove}/>
                 )}

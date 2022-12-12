@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: "100%",
-        height: 70,
+        height: 100,
         marginBottom: 5,
         borderBottomWidth: 0.5,
         borderColor: 'gray',
@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
     },
     nameExpTextView: {
         padding: 10,
+        width: 80,
         height: "100%",
         justifyContent: "center",
-        marginRight: 20,
     },
     nameText: {
         fontSize: 25,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
 
     },
     expText: {
-        fontSize: 20,
+        fontSize: 18,
         fontStyle: "italic",
     },
 
